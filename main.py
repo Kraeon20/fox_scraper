@@ -13,18 +13,13 @@ class Business:
     """holds business data"""
     name: str = None
     address: str = None
-    email: str = None  # New field to hold email addresses
+    email: str = None  
     website: str = None
     phone_number: str = None
-    linkedin: str = None  # Field to hold LinkedIn username
-    twitter: str = None  # Field to hold Twitter username
-    facebook: str = None  # Field to hold Facebook username
-    instagram: str = None  # Field to hold Instagram username
-
-    # reviews_count: int = None
-    # reviews_average: float = None
-    # latitude: float = None
-    # longitude: float = None
+    linkedin: str = None  
+    twitter: str = None 
+    facebook: str = None  
+    instagram: str = None  
 
 @dataclass
 class BusinessList:
@@ -149,6 +144,7 @@ def main(search_term, quantity):
         page.wait_for_timeout(3000)
         page.keyboard.press("Enter")
         page.wait_for_timeout(5000)
+        page.hover('//a[contains(@href, "https://www.google.com/maps/place")]')
 
         previously_counted = 0
         while True:
@@ -231,28 +227,24 @@ def main(search_term, quantity):
                 else:
                     business.phone_number = ""
 
-                business_list.business_list.append(business)
+                yield asdict(business)
             except Exception as e:
                 print(f'Error occurred: {e}')
 
 
         browser.close()
 
-        return business_list
 
-def business_list_to_table_rows(business_list):
-    rows = []
-    for business in business_list.business_list:
-        row = [
-            business.name,
-            business.address,
-            business.email,
-            business.website,
-            business.phone_number,
-            business.linkedin,
-            business.twitter,
-            business.facebook,
-            business.instagram,
-        ]
-        rows.append(row)
-    return rows
+def business_to_table_row(business):
+    row = [
+        business.name,
+        business.address,
+        business.email,
+        business.website,
+        business.phone_number,
+        business.linkedin,
+        business.twitter,
+        business.facebook,
+        business.instagram,
+    ]
+    return row

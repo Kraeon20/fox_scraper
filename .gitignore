@@ -1,0 +1,5 @@
+# folders to exclude
+__pycache__/
+
+#files to exclude
+test.py

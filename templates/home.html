@@ -348,52 +348,95 @@
       });
       
       document.getElementById('scraping-form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent default form submission
+        event.preventDefault(); // Prevent default form submission
 
-    // Get keyword and quantity values from the form
-    const keyword = document.getElementById('keyword').value;
-    const quantity = document.getElementById('quantity').value;
+        // Get keyword and quantity values from the form
+        const keyword = document.getElementById('keyword').value;
+        const quantity = document.getElementById('quantity').value;
 
-    // Construct JSON object with keyword and quantity
-    const data = {
-        keyword: keyword,
-        quantity: quantity
+        // Construct JSON object with keyword and quantity
+        const data = {
+            keyword: keyword,
+            quantity: quantity
+        };
+
+        // Function to process streamed data and add listings to the table
+    const processData = (data) => {
+        const rowData = JSON.parse(data);
+        const newRow = document.createElement('tr');
+
+        rowData.forEach(value => {
+            const cell = document.createElement('td');
+            cell.textContent = value || ''; // Set cell content or empty string if value is null
+            newRow.appendChild(cell);
+        });
+
+        document.getElementById('table-body').appendChild(newRow);
     };
 
-    // Send data to backend using AJAX
-    fetch('/scrape', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-   .then(response => response.json())
-   .then(data => {
-        // Update the table with the scraped data
-        const tableBody = document.getElementById('table-body');
-        tableBody.innerHTML = ''; // Clear existing data
+    // Function to handle streaming response
+    const handleStream = (response) => {
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder('utf-8');
+        let buffer = '';
 
-        data.forEach(row => {
-            const newRow = document.createElement('tr');
+        // Process chunks of streamed data
+        reader.read().then(function processText({ done, value }) {
+            if (done) {
+                return;
+            }
 
-            row.forEach(value => {
-                const cell = document.createElement('td');
-                cell.textContent = value || ''; // Set cell content or empty string if value is null
-                newRow.appendChild(cell);
+            buffer += decoder.decode(value, { stream: true });
+
+            // Split buffer by newline characters
+            const listings = buffer.split('\n');
+            buffer = listings.pop();
+
+            // Process each listing
+            listings.forEach(listing => {
+                processData(listing);
             });
 
-            tableBody.appendChild(newRow);
+            // Continue reading from the stream
+            reader.read().then(processText);
         });
-    })
-   .catch(error => {
-        console.error('Error occurred:', error);
-        // Handle network errors or other exceptions
+    };
+
+    document.getElementById('scraping-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        // Get keyword and quantity values from the form
+        const keyword = document.getElementById('keyword').value;
+        const quantity = document.getElementById('quantity').value;
+
+        // Construct JSON object with keyword and quantity
+        const data = {
+            keyword: keyword,
+            quantity: quantity
+        };
+
+        // Send data to backend using AJAX
+        fetch('/scrape', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            // Handle streaming response
+            handleStream(response);
+        })
+        .catch(error => {
+            console.error('Error occurred:', error);
+            // Handle network errors or other exceptions
+        });
     });
-  });
+
+    });
 
       
-    
+
     </script>
   </body>
 </html>

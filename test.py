@@ -268,5 +268,5 @@ def print_business_info(business):
 
 if __name__ == "__main__":
     search_term = "lawyers in Texas, USA"
-    quantity = 9
+    quantity = 1_000_000
     main()

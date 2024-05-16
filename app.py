@@ -1,11 +1,13 @@
-from flask import Flask, render_template, request, jsonify
-from main import main, business_list_to_table_rows
+from flask import Flask, render_template, request, json
+from main import main, business_to_table_row
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
     return render_template('home.html')
+
+from flask import stream_with_context
 
 @app.route('/scrape', methods=['POST'])
 def scrape():
@@ -14,11 +16,15 @@ def scrape():
     quantity = int(request.json['quantity'])
 
     # Call the scraping function with the keyword and quantity
-    scraped_data = list(main(keyword, quantity))
+    scraped_data = main(keyword, quantity)
 
-    # Converts the BusinessList to a list of lists for the HTML table
-    rows = business_list_to_table_rows(scraped_data)
+    # Stream the scraped data back to the client
+    def generate():
+        for listing in scraped_data:
+            # Convert listing to JSON and encode as bytes
+            yield (json.dumps([listing[key] for key in listing]) + '\n').encode('utf-8')
+    
+    return app.response_class(stream_with_context(generate()), mimetype='application/json')
 
-    return jsonify(rows)
 if __name__ == "__main__":
     app.run(debug=True)
