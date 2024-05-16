@@ -288,10 +288,11 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+  justify-content: space-between;
 }
 
 .scraping__container .input__container {
-  flex: 1 1 300px; /* Adjust as needed */
+  flex: 0 0 calc(50% - 0.5rem); /* Adjusted width for each field */
 }
 
 .scraping__container label {
@@ -309,8 +310,8 @@ body {
 }
 
 .scraping__container button {
-  padding: 0.75rem 2rem;
-  margin-top: 1rem;
+  flex: 0 0 calc(10% - 0.5rem); /* Reduced width for the button */
+  margin: 1rem auto 0; /* Center the button horizontally */
 }
 
 .scraping__container table {
@@ -323,9 +324,12 @@ body {
 
 .scraping__container th,
 .scraping__container td {
-  padding: 0.75rem;
-  min-width: 150px;
+  padding: 0.5rem; /* Reduced padding */
+  min-width: 30px; /* Decreased minimum width */
   border: 1px solid #ccc;
+  white-space: nowrap; /* Prevent wrapping */
+  overflow: hidden; /* Hide overflowing content */
+  text-overflow: ellipsis; /* Display ellipsis for overflow */
 }
 
 .scraping__container th {

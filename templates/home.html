@@ -53,40 +53,41 @@
     </header>
 
 
-    <section class="section__container scraping__container" id="scraping">
-      <!-- Scraping section content -->
-      <form id="scraping-form">
-          <div class="input__container">
-              <label for="keyword">Keyword:</label>
-              <input type="text" id="keyword" name="keyword" required>
-          </div>
-          <div class="input__container">
-              <label for="quantity">Quantity:</label>
-              <input type="number" id="quantity" name="quantity" min="1" required>
-          </div>
-          <button type="submit" class="btn">Scrape</button>
-      </form>
-      <div class="table__container">
-        <table id="scraped-data">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Address</th>
-              <th>Email</th>
-              <th>website</th>
-              <th>Phone</th>
-              <th>LinkedIn</th>
-              <th>Twitter</th>
-              <th>Facebook</th>
-              <th>Instagram</th>
-            </tr>
-          </thead>
-          <tbody id="table-body">
-            <!-- Data will be populated here -->
-          </tbody>
-        </table>
-      </div>
+      <section class="section__container scraping__container" id="scraping">
+        <!-- Scraping section content -->
+        <form id="scraping-form">
+            <div class="input__container">
+                <label for="keyword">Keyword:</label>
+                <input type="text" id="keyword" name="keyword" required>
+            </div>
+            <div class="input__container">
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" name="quantity" min="1" required>
+            </div>
+            <button type="submit" class="btn">Scrape</button> <!-- Moved inside the form -->
+        </form>
+        <div class="table__container">
+            <table id="scraped-data">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Email</th>
+                        <th>website</th>
+                        <th>Phone</th>
+                        <th>LinkedIn</th>
+                        <th>Twitter</th>
+                        <th>Facebook</th>
+                        <th>Instagram</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <!-- Data will be populated here -->
+                </tbody>
+            </table>
+        </div>
     </section>
+    
     
     <section class="section__container service__container" id="data">
       <p class="section__subheader">Data</p>
@@ -273,6 +274,7 @@
             Yes, definitely! My project is open for customization, allowing you to tailor it according to your specific requirements. Whether you need additional features or modifications, feel free to adapt it to suit your needs.
           </div>
         </div>
+
         <div class="question__box">
           <div class="title">
             <span>How secure is your project?</span>
