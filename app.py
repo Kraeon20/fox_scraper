@@ -1,13 +1,14 @@
 from flask import Flask, render_template, request, json
-from main import main, business_to_table_row
+from main import main
+from flask import stream_with_context
 
 app = Flask(__name__)
+
 
 @app.route('/')
 def index():
     return render_template('home.html')
 
-from flask import stream_with_context
 
 @app.route('/scrape', methods=['POST'])
 def scrape():
