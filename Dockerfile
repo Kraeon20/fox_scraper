@@ -1,34 +1,31 @@
-# Use the official Python image from the Docker Hub
-FROM python:3.9-slim
+FROM python:3.9
 
-# Install system dependencies
+# Install necessary system dependencies
 RUN apt-get update && apt-get install -y \
-    libatk1.0-0 \
-    libatk-bridge2.0-0 \
-    libdrm2 \
-    libatspi2.0-0 \
-    libxcomposite1 \
-    libxdamage1 \
-    libxfixes3 \
-    libxrandr2 \
-    libgbm1 \
-    libxkbcommon0 \
-    libasound2 \
-    wget \
-    && apt-get clean
+    python3 \
+    python3-pip \
+    curl \
+    unzip \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install Playwright and its dependencies
-RUN pip install playwright
-RUN playwright install
+# Install Playwright
+# RUN pip3 install playwright
+# RUN playwright install --with-deps chromium
 
-# Set the working directory
+# Set the working directory in the container
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
+
+
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
+
+
+# Copy the application files to the container
 COPY . /app
 
-# Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+# Expose port
+EXPOSE 5000
 
 # Command to run the application
-CMD ["gunicorn", "app:app"]
+CMD ["python3", "app.py"]
