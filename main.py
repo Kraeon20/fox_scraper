@@ -1,9 +1,6 @@
 from playwright.sync_api import sync_playwright
 from dataclasses import dataclass, asdict, field
-import pandas as pd
-import argparse
-import os
-import sys
+import time
 import re
 from email_validator import validate_email, EmailNotValidError
 
@@ -69,7 +66,7 @@ def extract_emails_from_page(page):
                 return email_info.normalized
             except EmailNotValidError as e:
                 # If the email address is not valid or deliverable, return None
-                return None
+                return "None"
     
     # If no valid email is found, return "None" as a string
     return "None"
@@ -149,6 +146,7 @@ def main(search_term, quantity):
         previously_counted = 0
         while True:
             page.mouse.wheel(0, 10000)
+            href = page.evaluate('() => document.location.href')
             page.wait_for_timeout(3000)
 
             if (
@@ -157,6 +155,7 @@ def main(search_term, quantity):
                 ).count()
                 >= quantity
             ):
+                time.sleep(5) # Wait for 5 seconds
                 listings = page.locator(
                     '//a[contains(@href, "https://www.google.com/maps/place")]'
                 ).all()[:quantity]
@@ -192,15 +191,13 @@ def main(search_term, quantity):
                 website_xpath = '//a[@data-item-id="authority"]//div[contains(@class, "fontBodyMedium")]'
                 phone_number_xpath = '//button[contains(@data-item-id, "phone:tel:")]//div[contains(@class, "fontBodyMedium")]'
 
-                if len(listing.get_attribute(name_attribute)) >= 1:
-                    business.name = listing.get_attribute(name_attribute)
-                else:
-                    business.name = ""
+                business.name = listing.get_attribute(name_attribute)
+                
 
                 if page.locator(address_xpath).count() > 0:
                     business.address = page.locator(address_xpath).all()[0].inner_text()
                 else:
-                    business.address = ""
+                    business.address = "None"
 
                 if page.locator(website_xpath).count() > 0:
                     website = page.locator(website_xpath).all()[0].inner_text()
@@ -220,12 +217,12 @@ def main(search_term, quantity):
                     else:
                         business.website = None
                 else:
-                    business.website = ""
+                    business.website = "None"
 
                 if page.locator(phone_number_xpath).count() > 0:
                     business.phone_number = page.locator(phone_number_xpath).all()[0].inner_text()
                 else:
-                    business.phone_number = ""
+                    business.phone_number = "None"
 
                 yield asdict(business)
             except Exception as e:

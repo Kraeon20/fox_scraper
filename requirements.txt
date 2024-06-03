@@ -8,15 +8,14 @@ et-xmlfile==1.1.0
 Flask==3.0.3
 Flask-SocketIO==5.3.6
 greenlet==3.0.3
-gunicorn==21.2.0
 h11==0.14.0
 idna==3.7
 itsdangerous==2.2.0
 Jinja2==3.1.4
 MarkupSafe==2.1.5
-numpy==1.26.4
+numpy==1.24.4
 openpyxl==3.1.2
-pandas==2.2.2
+pandas==2.0.3
 playwright==1.43.0
 pyee==11.1.0
 python-dateutil==2.9.0.post0
