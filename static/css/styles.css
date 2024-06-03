@@ -314,17 +314,21 @@ body {
   margin: 1rem auto 0; /* Center the button horizontally */
 }
 
-.scraping__container table {
-  width: 100%;
-  margin-top: 2rem;
-  border-collapse: collapse;
-  overflow-x: auto; 
-  display: block;
+.table__container {
+  margin-top: 20px;
+  max-height: 400px; /* Set a fixed height for the table container */
+  overflow-y: auto;  /* Enable vertical scrolling */
 }
 
-.scraping__container th,
-.scraping__container td {
-  padding: 0.5rem; /* Reduced padding */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  text-align: left;
   min-width: 30px; /* Decreased minimum width */
   border: 1px solid #ccc;
   white-space: nowrap; /* Prevent wrapping */
@@ -332,10 +336,14 @@ body {
   text-overflow: ellipsis; /* Display ellipsis for overflow */
 }
 
-.scraping__container th {
+thead th {
   background-color: var(--primary-color);
   color: var(--white);
+  position: sticky; /* Make table headers sticky */
+  top: 0; /* Position the sticky headers at the top */
+  z-index: 1; /* Ensure the headers stay above the table body */
 }
+
 
 .scraping__container label {
   display: block;
@@ -647,12 +655,17 @@ body {
     height: 135px;
   }
 
-  
+  .scraping__container table {
+    display: block;
+  }
 }
 
 
-
 @media (width < 600px) {
+
+  /* .scraping__container table {
+    display: block;
+  } */
   
   .header__container {
     padding-top: 10rem;

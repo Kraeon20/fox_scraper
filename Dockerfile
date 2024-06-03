@@ -20,7 +20,10 @@ WORKDIR /app
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 82830d709541ef4a2f01fdd4498e07b89c245605
 # Copy the application files to the container
 COPY . /app
 

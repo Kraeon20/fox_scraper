@@ -56,36 +56,40 @@
       <section class="section__container scraping__container" id="scraping">
         <!-- Scraping section content -->
         <form id="scraping-form">
-            <div class="input__container">
-                <label for="keyword">Keyword:</label>
-                <input type="text" id="keyword" name="keyword" required>
-            </div>
-            <div class="input__container">
-                <label for="quantity">Quantity:</label>
-                <input type="number" id="quantity" name="quantity" min="1" required>
-            </div>
-            <button type="submit" class="btn">Scrape</button> <!-- Moved inside the form -->
+          <div class="input__container">
+              <label for="keyword">Keyword:</label>
+              <input type="text" id="keyword" name="keyword" required>
+          </div>
+          <div class="input__container">
+              <label for="quantity">Quantity:</label>
+              <input type="number" id="quantity" name="quantity" min="1" required>
+          </div>
+          <button id="scrape-btn" class="btn">Scrape</button>
         </form>
         <div class="table__container">
-            <table id="scraped-data">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Address</th>
-                        <th>Email</th>
-                        <th>website</th>
-                        <th>Phone</th>
-                        <th>LinkedIn</th>
-                        <th>Twitter</th>
-                        <th>Facebook</th>
-                        <th>Instagram</th>
-                    </tr>
-                </thead>
-                <tbody id="table-body">
-                    <!-- Data will be populated here -->
-                </tbody>
-            </table>
+          <table id="scraped-data">
+              <thead>
+                  <tr>
+                      <th>Name</th>
+                      <th>Address</th>
+                      <th>Email</th>
+                      <th>website</th>
+                      <th>Phone</th>
+                      <th>LinkedIn</th>
+                      <th>Twitter</th>
+                      <th>Facebook</th>
+                      <th>Instagram</th>
+                  </tr>
+              </thead>
+              <tbody id="table-body">
+                  <!-- Data will be populated here -->
+              </tbody>
+          </table>
         </div>
+        <!-- <div style="text-align: center; margin-top: 20px;">
+          <button class="btn" id="downloadCSV">Download CSV</button>
+          <button class="btn" id="downloadExcel">Download Excel</button>
+      </div> -->
     </section>
     
     
@@ -349,7 +353,7 @@
         });
       });
       
-      document.getElementById('scraping-form').addEventListener('submit', function(event) {
+      document.getElementById('scrape-btn').addEventListener('click', function(event) {
         event.preventDefault(); // Prevent default form submission
 
         // Get keyword and quantity values from the form
@@ -363,58 +367,47 @@
         };
 
         // Function to process streamed data and add listings to the table
-    const processData = (data) => {
-        const rowData = JSON.parse(data);
-        const newRow = document.createElement('tr');
+        const processData = (data) => {
+          const rowData = JSON.parse(data);
+          const newRow = document.createElement('tr');
 
-        rowData.forEach(value => {
-            const cell = document.createElement('td');
-            cell.textContent = value || ''; // Set cell content or empty string if value is null
-            newRow.appendChild(cell);
-        });
+          rowData.forEach(value => {
+              const cell = document.createElement('td');
+              // Remove the "·Lien consulté" text before setting the cell content
+              const cleanedValue = value ? value.replace('·Lien consulté', '') : '';
+              cell.textContent = cleanedValue || ''; // Set cell content or empty string if value is null
+              newRow.appendChild(cell);
+          });
 
-        document.getElementById('table-body').appendChild(newRow);
-    };
+          document.getElementById('table-body').appendChild(newRow);
+      };
 
-    // Function to handle streaming response
-    const handleStream = (response) => {
-        const reader = response.body.getReader();
-        const decoder = new TextDecoder('utf-8');
-        let buffer = '';
+        // Function to handle streaming response
+        const handleStream = (response) => {
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder('utf-8');
+            let buffer = '';
 
-        // Process chunks of streamed data
-        reader.read().then(function processText({ done, value }) {
-            if (done) {
-                return;
-            }
+            // Process chunks of streamed data
+            reader.read().then(function processText({ done, value }) {
+                if (done) {
+                    return;
+                }
 
-            buffer += decoder.decode(value, { stream: true });
+                buffer += decoder.decode(value, { stream: true });
 
-            // Split buffer by newline characters
-            const listings = buffer.split('\n');
-            buffer = listings.pop();
+                // Split buffer by newline characters
+                const listings = buffer.split('\n');
+                buffer = listings.pop();
 
-            // Process each listing
-            listings.forEach(listing => {
-                processData(listing);
+                // Process each listing
+                listings.forEach(listing => {
+                    processData(listing);
+                });
+
+                // Continue reading from the stream
+                reader.read().then(processText);
             });
-
-            // Continue reading from the stream
-            reader.read().then(processText);
-        });
-    };
-
-    document.getElementById('scraping-form').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent default form submission
-
-        // Get keyword and quantity values from the form
-        const keyword = document.getElementById('keyword').value;
-        const quantity = document.getElementById('quantity').value;
-
-        // Construct JSON object with keyword and quantity
-        const data = {
-            keyword: keyword,
-            quantity: quantity
         };
 
         // Send data to backend using AJAX
@@ -434,11 +427,6 @@
             // Handle network errors or other exceptions
         });
     });
-
-    });
-
-      
-
     </script>
   </body>
 </html>
