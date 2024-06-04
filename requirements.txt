@@ -15,7 +15,6 @@ Jinja2==3.1.4
 MarkupSafe==2.1.5
 numpy==1.24.4
 openpyxl==3.1.2
-pandas==2.1.2
 pandas==2.0.3
 playwright==1.43.0
 pyee==11.1.0
