@@ -1,8 +1,9 @@
 # folders to exclude
-/__pycache__
+__pycache__/
 
 #files to exclude
-/test.py
-/Procfile
-/test-scraper.py
-/heroku.yml
+test.py
+Procfile
+Dockerfile
+test-scraper.py
+heroku.yml
