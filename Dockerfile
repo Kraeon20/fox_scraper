@@ -15,17 +15,12 @@ RUN apt-get update && apt-get install -y \
 # Set the working directory in the container
 WORKDIR /app
 
-
+# Copy the application files to the container
+COPY . /app
 
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 82830d709541ef4a2f01fdd4498e07b89c245605
-# Copy the application files to the container
-COPY . /app
+FROM mcr.microsoft.com/playwright:v1.34.0-jammy
 
 # Expose port
 EXPOSE 5000
