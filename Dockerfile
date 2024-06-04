@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/playwright
+FROM mcr.microsoft.com/playwright:v1.43.0-jammy
 
 # Install necessary system dependencies
 RUN apt-get update && apt-get install -y \
