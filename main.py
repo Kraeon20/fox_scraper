@@ -133,7 +133,7 @@ def main(search_term, quantity):
         page = browser.new_page()
 
         page.goto("https://www.google.com/maps", timeout=6000)
-        page.wait_for_timeout(5000)
+
 
         print(f"-----\n{search_term}".strip())
 
