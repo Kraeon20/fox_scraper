@@ -15,11 +15,8 @@ Jinja2==3.1.4
 MarkupSafe==2.1.5
 numpy==1.24.4
 openpyxl==3.1.2
-<<<<<<< HEAD
 pandas==2.1.2
-=======
 pandas==2.0.3
->>>>>>> 82830d709541ef4a2f01fdd4498e07b89c245605
 playwright==1.43.0
 pyee==11.1.0
 python-dateutil==2.9.0.post0
