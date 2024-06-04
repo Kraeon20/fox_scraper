@@ -2,17 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/index.py",
-      "use": "@vercel/python",
-      "config": {
-        "buildCommand": "apt-get update && apt-get install -y python3-distutils && pip install -r requirements.txt"
-      }
+      "src": "Dockerfile",
+      "use": "@vercel/docker"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "api/index.py"
+      "dest": "/"
     }
   ]
 }
