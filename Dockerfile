@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/playwright:v1.34.0-jammy
+FROM mcr.microsoft.com/playwright:v1.43.0-jammy
 
 # Install necessary system dependencies
 RUN apt-get update && apt-get install -y \
@@ -19,4 +19,4 @@ RUN python3 -m pip install -r requirements.txt
 EXPOSE 5000
 
 # Command to run the application
-CMD ["python3", "app.py"]
+CMD ["gunicorn", "app:app"]
