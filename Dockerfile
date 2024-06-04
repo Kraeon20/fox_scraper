@@ -14,6 +14,7 @@ COPY . /app
 # Copy and install Python dependencies
 COPY requirements.txt requirements.txt
 RUN python3 -m pip install -r requirements.txt
+RUN playwright install-deps
 
 # Expose port 5000
 EXPOSE 5000
