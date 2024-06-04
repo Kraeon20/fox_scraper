@@ -3,3 +3,6 @@
 
 #files to exclude
 /test.py
+/Procfile
+/test-scraper.py
+/heroku.yml
