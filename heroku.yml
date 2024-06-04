@@ -3,4 +3,4 @@ build:
     web: Dockerfile
 
 run:
-  web: gunicorn app:app
+  web: gunicorn app:app --timeout 300
