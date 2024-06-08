@@ -245,3 +245,4 @@ def business_to_table_row(business):
         business.instagram,
     ]
     return row
+    
