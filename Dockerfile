@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Playwright
-# RUN pip3 install playwright
+RUN pip3 install playwright
 # RUN playwright install --with-deps chromium
 
 # Set the working directory in the container
