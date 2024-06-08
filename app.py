@@ -1,4 +1,4 @@
-    from flask import Flask, render_template, request, json
+from flask import Flask, render_template, request, json
 from main import main
 from flask import stream_with_context
 import os
