@@ -1,10 +1,8 @@
 bidict==0.23.1
 blinker==1.8.2
 click==8.1.7
-colorama==0.4.6
 dnspython==2.6.1
 email_validator==2.1.1
-et-xmlfile==1.1.0
 Flask==3.0.3
 Flask-SocketIO==5.3.6
 greenlet==3.0.3
@@ -13,10 +11,7 @@ idna==3.7
 itsdangerous==2.2.0
 Jinja2==3.1.4
 MarkupSafe==2.1.5
-numpy==1.24.4
 openpyxl==3.1.2
-pandas==2.0.3
-playwright==1.43.0
 pyee==11.1.0
 python-dateutil==2.9.0.post0
 python-engineio==4.9.0
