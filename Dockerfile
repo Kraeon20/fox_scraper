@@ -1,4 +1,4 @@
-FROM python:3.10.7
+FROM python:3.9-bullseye
 
 # Install necessary system dependencies
 RUN apt-get update && apt-get install -y \
