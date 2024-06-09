@@ -23,4 +23,4 @@ RUN playwright install-deps
 EXPOSE 8000
 
 # Command to run the application
-CMD ["gunicorn", "app:app", "-b", "0.0.0.0:8000", "--reload"]
+CMD ["python3", "app.py"]
