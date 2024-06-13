@@ -1,0 +1,6 @@
+{
+    "scripts": {
+      "postinstall": "playwright install"
+    }
+  }
+  
