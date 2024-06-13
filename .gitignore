@@ -3,7 +3,5 @@ __pycache__/
 
 #files to exclude
 test.py
-Procfile
-Dockerfile
 test-scraper.py
 heroku.yml
