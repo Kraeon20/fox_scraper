@@ -132,7 +132,7 @@ def main(search_term, quantity):
         browser = p.chromium.launch(headless=True)
         page = browser.new_page()
 
-        page.goto("https://www.google.com/maps")
+        page.goto("https://www.google.com/maps", timeout=2000)
         # page.wait_for_timeout(5000)
 
         print(f"-----\n{search_term}".strip())
@@ -155,6 +155,7 @@ def main(search_term, quantity):
                 ).count()
                 >= quantity
             ):
+                time.sleep(5) # Wait for 5 seconds
                 listings = page.locator(
                     '//a[contains(@href, "https://www.google.com/maps/place")]'
                 ).all()[:quantity]
@@ -181,7 +182,7 @@ def main(search_term, quantity):
         for listing in listings:
             try:
                 listing.click()
-                page.wait_for_timeout(1000)
+                page.wait_for_timeout(2000)
 
                 business = Business()
 
