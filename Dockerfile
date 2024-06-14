@@ -1,20 +1,20 @@
 FROM python:3.10.7
 
 # Install necessary system dependencies
-RUN apt-get update && apt-get install -y \
-    curl \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+# RUN apt-get update && apt-get install -y \
+#     curl \
+#     && apt-get clean \
+#     && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory in the container
 WORKDIR /app
 
 # Copy the requirements file and install dependencies
 COPY requirements.txt requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
 # Install Playwright and its dependencies
-RUN pip install --no-cache-dir playwright
+RUN pip install playwright
 RUN playwright install chromium
 RUN playwright install-deps chromium
 
