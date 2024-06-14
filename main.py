@@ -132,22 +132,22 @@ def main(search_term, quantity):
         browser = p.chromium.launch(headless=True)
         page = browser.new_page()
 
-        page.goto("https://www.google.com/maps", timeout=2000)
-        # page.wait_for_timeout(5000)
+        page.goto("https://www.google.com/maps", timeout=6000)
+        page.wait_for_timeout(5000)
 
         print(f"-----\n{search_term}".strip())
 
         page.locator('//input[@id="searchboxinput"]').fill(search_term)
-        # page.wait_for_timeout(3000)
+        page.wait_for_timeout(3000)
         page.keyboard.press("Enter")
-        # page.wait_for_timeout(5000)
+        page.wait_for_timeout(5000)
         page.hover('//a[contains(@href, "https://www.google.com/maps/place")]')
 
         previously_counted = 0
         while True:
             page.mouse.wheel(0, 10000)
             href = page.evaluate('() => document.location.href')
-            # page.wait_for_timeout(3000)
+            page.wait_for_timeout(3000)
 
             if (
                 page.locator(
@@ -182,7 +182,7 @@ def main(search_term, quantity):
         for listing in listings:
             try:
                 listing.click()
-                page.wait_for_timeout(2000)
+                page.wait_for_timeout(5000)
 
                 business = Business()
 
