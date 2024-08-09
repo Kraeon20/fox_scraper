@@ -1,2 +1,1 @@
-web: gunicorn app:app
-release: python -m playwright install
+web: sh postinstall.sh && python app.py
