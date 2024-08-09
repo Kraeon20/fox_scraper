@@ -1,0 +1,1 @@
+web: sh postinstall.sh && python app.py
