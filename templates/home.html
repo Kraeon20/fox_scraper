@@ -44,7 +44,7 @@
     <img src="/static/assets/background.png" alt="background">
     <div class="paragraph__container">
         <p class="paragraph__text">
-          <h2 style="color: rgb(210, 218, 225);">
+          <h2 style="color: rgb(16, 17, 17);">
             Bridging the gap between Businesses and Genuine Prospects        
           </h2>
         </p>
@@ -53,148 +53,106 @@
     </header>
 
 
-      <section class="section__container scraping__container" id="scraping">
-        <!-- Scraping section content -->
-        <form id="scraping-form">
-          <div class="input__container">
-              <label for="keyword">Keyword:</label>
-              <input type="text" id="keyword" name="keyword" required>
-          </div>
-          <div class="input__container">
-              <label for="quantity">Quantity:</label>
-              <input type="number" id="quantity" name="quantity" min="1" required>
-          </div>
-          <button id="scrape-btn" class="btn">Scrape</button>
-        </form>
-        <div class="table__container">
-          <table id="scraped-data">
-              <thead>
-                  <tr>
-                      <th>Name</th>
-                      <th>Address</th>
-                      <th>Email</th>
-                      <th>website</th>
-                      <th>Phone</th>
-                      <th>LinkedIn</th>
-                      <th>Twitter</th>
-                      <th>Facebook</th>
-                      <th>Instagram</th>
-                  </tr>
-              </thead>
-              <tbody id="table-body">
-                  <!-- Data will be populated here -->
-              </tbody>
-          </table>
+    <section class="section__container scraping__container" id="scraping">
+      <!-- Scraping section content -->
+      <form id="scraping-form">
+        <div class="input__container">
+          <label for="keyword">Keyword:</label>
+          <input type="text" id="keyword" name="keyword" required>
         </div>
-        <!-- <div style="text-align: center; margin-top: 20px;">
-          <button class="btn" id="downloadCSV">Download CSV</button>
-          <button class="btn" id="downloadExcel">Download Excel</button>
-      </div> -->
+        <button id="scrape-btn" class="btn">Scrape</button>
+      </form>
+      <div class="table__container">
+        <table id="scraped-data">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Address</th>
+              <th>Email</th>
+              <th>Website</th>
+              <th>Phone</th>
+              <th>LinkedIn</th>
+              <th>Twitter</th>
+              <th>Facebook</th>
+              <th>Instagram</th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+            <!-- Data will be populated here -->
+          </tbody>
+        </table>
+      </div>
     </section>
+    
+    
     
     
     <section class="section__container service__container" id="data">
-      <p class="section__subheader">Data</p>
-      <h2 class="section__header">What Data Information Can FoxLeads get?</h2>
+      <p class="section__subheader">Data Services</p>
+      <h2 class="section__header">What Information Can FoxLeads Gather?</h2>
       <div class="service__grid">
-        <div class="service__card">
-          <div class="service__icon">
-            <img src="/static/assets/id-card.png" alt="service" />
+          <div class="service__card">
+              <div class="service__icon">
+                  <img src="/static/assets/id-card.png" alt="Name" />
+              </div>
+              <h4>Name</h4>
+              <p>FoxLeads can gather accurate names of individuals or businesses.</p>
           </div>
-          <h4>Name</h4>
-          <p>
-            FoxLeads can gather accurate names of individuals or businesses.
-          </p>
-          <!-- <a href="#">
-            Learn more <span><i class="ri-arrow-right-line"></i></span>
-          </a> -->
-        </div>
-        <div class="service__card">
-          <div class="service__icon">
-            <img src="/static/assets/map.png" alt="service" />
+          <div class="service__card">
+              <div class="service__icon">
+                  <img src="/static/assets/map.png" alt="Address" />
+              </div>
+              <h4>Address</h4>
+              <p>Obtain physical addresses of businesses or individuals.</p>
           </div>
-          <h4>Address</h4>
-          <p>
-            Obtain physical addresses of businesses or individuals.
-          </p>
-          <!-- <a href="#">
-            Learn more <span><i class="ri-arrow-right-line"></i></span>
-          </a> -->
-        </div>
-        <div class="service__card">
-          <div class="service__icon">
-            <img src="/static/assets/mail.png" alt="service" />
+          <div class="service__card">
+              <div class="service__icon">
+                  <img src="/static/assets/mail.png" alt="Email" />
+              </div>
+              <h4>Email</h4>
+              <p>Gather email addresses associated with businesses or individuals.</p>
           </div>
-          <h4>Email</h4>
-          <p>
-            Gather email addresses associated with businesses or individuals.
-          </p>
-          <!-- <a href="#">
-            Learn more <span><i class="ri-arrow-right-line"></i></span>
-          </a> -->
-        </div>
-        <div class="service__card">
-            <div class="service__icon">
-              <img src="/static/assets/phone-call.png" alt="service" />
-            </div>
-            <h4>Phone Number</h4>
-            <p>
-              Gather email addresses associated with businesses or individuals.
-            </p>
-            <!-- <a href="#">
-              Learn more <span><i class="ri-arrow-right-line"></i></span>
-            </a> -->
+          <div class="service__card">
+              <div class="service__icon">
+                  <img src="/static/assets/phone-call.png" alt="Phone Number" />
+              </div>
+              <h4>Phone Number</h4>
+              <p>Retrieve phone numbers linked to businesses or individuals.</p>
           </div>
-        <div class="service__card">
-          <div class="service__icon">
-            <img src="/static/assets/linkedin.png" alt="service" />
+          <div class="service__card">
+              <div class="service__icon">
+                  <img src="/static/assets/linkedin.png" alt="LinkedIn Profile" />
+              </div>
+              <h4>LinkedIn Profile</h4>
+              <p>Access LinkedIn profiles connected to businesses or individuals.</p>
+              <a href="#" class="learn-more">
+                  Learn more <span class="arrow-icon">&rarr;</span>
+              </a>
           </div>
-          <h4>LinkedIn Profile</h4>
-          <p>
-            Access LinkedIn profiles linked to businesses or individuals.
-          </p>
-          <a href="#">
-            Learn more <span><i class="ri-arrow-right-line"></i></span>
-          </a>
-        </div>
-        <div class="service__card">
-          <div class="service__icon">
-            <img src="/static/assets/twitter.png" alt="service" />
+          <div class="service__card">
+              <div class="service__icon">
+                  <img src="/static/assets/twitter.png" alt="Twitter Profile" />
+              </div>
+              <h4>Twitter Profile</h4>
+              <p>Obtain Twitter handles associated with businesses or individuals.</p>
           </div>
-          <h4>Twitter Profile</h4>
-          <p>
-            Obtain Twitter handles associated with businesses or individuals.
-          </p>
-          <!-- <a href="#">
-            Learn more <span><i class="ri-arrow-right-line"></i></span>
-          </a> -->
-        </div>
-        <div class="service__card">
-          <div class="service__icon">
-            <img src="/static/assets/facebook.png" alt="service" />
+          <div class="service__card">
+              <div class="service__icon">
+                  <img src="/static/assets/facebook.png" alt="Facebook Page" />
+              </div>
+              <h4>Facebook Page</h4>
+              <p>Gather Facebook profiles linked to businesses or individuals.</p>
           </div>
-          <h4>Facebook Page</h4>
-          <p>
-            Gather Facebook profiles linked to businesses or individuals.
-          </p>
-          <!-- <a href="#">
-            Learn more <span><i class="ri-arrow-right-line"></i></span>
-          </a> -->
-        </div>
-        <div class="service__card">
-          <div class="service__icon">
-            <img src="/static/assets/instagram.png" alt="service" />
+          <div class="service__card">
+              <div class="service__icon">
+                  <img src="/static/assets/instagram.png" alt="Instagram Page" />
+              </div>
+              <h4>Instagram Page</h4>
+              <p>Access Instagram handles connected to businesses or individuals.</p>
           </div>
-          <h4>Instagram Page</h4>
-          <p>
-            Access Instagram handles associated with businesses or individuals.
-          </p>
-          <!-- <a href="#">
-            Learn more <span><i class="ri-arrow-right-line"></i></span>
-          </a> -->
-        </div>
       </div>
     </section>
+  
     
     <section class="section__container template__container" id="about">
       <div class="template__content">
@@ -208,7 +166,7 @@
           This project basically dives into Google Maps and pulls out publicly available info like 
           names, addresses, emails, phone numbers, and even social media profiles like 
           Facebook, LinkedIn, Instagram, and Twitter. It's all about making those connections easier for everyone involved. 
-          And guess what? I built it using <a href="https://www.python.org/" style="color: aqua;">Python</a> and <a href="https://playwright.dev/" style="color: aqua;">Playwright</a>. 
+          And guess what? I built it using <a href="https://www.python.org/" style="color: rgb(34, 255, 0);">Python</a> and <a href="https://playwright.dev/" style="color: rgb(34, 255, 0);">Playwright</a>. 
           <br>It's been quite the journey, but I'm really proud of how it's turned out!
         </p>
       </div>
@@ -295,7 +253,7 @@
 
     <footer class="section__container footer__container">
       <div class="footer__grid">
-        <div class="footer__col">
+        <div class="footer__col footer__logo-col">
           <div class="footer__logo">
             <!-- Replace "WDM" with the fox logo -->
             <img src="/static/assets/background.png" alt="Fox Logo">
@@ -307,25 +265,29 @@
             <span><i class="ri-phone-fill"></i></span> +212 609090882
           </p>
         </div>
-        <div class="footer__col">
+        <div class="footer__col footer__links-col">
           <h4>About</h4>
-          <p>Home</p>
-          <p>Data</p>
-          <p>About</p>
-          <p>Donate</p>
-          <p>FAQ</p>
+          <p><a href="#home">Home</a></p>
+          <p><a href="#data">Data</a></p>
+          <p><a href="#about">About</a></p>
+          <p><a href="#donate">Donate</a></p>
+          <p><a href="#faq">FAQ</a></p>
+        </div>
+        <div class="footer__col footer__socials-col">
+          <h4>Follow Me</h4>
+          <div class="socials">
+            <span><i class="ri-facebook-fill"></i></span>
+            <span><i class="ri-twitter-fill"></i></span>
+            <span><i class="ri-instagram-line"></i></span>
+            <!-- <span><i class="ri-youtube-fill"></i></span> -->
+          </div>
         </div>
       </div>
     </footer>
     <div class="section__container footer__bar">
       <p>Copyright © 2024 FoxLeads. All rights reserved.</p>
-      <div class="socials">
-        <span><i class="ri-facebook-fill"></i></span>
-        <span><i class="ri-twitter-fill"></i></span>
-        <span><i class="ri-instagram-line"></i></span>
-        <!-- <span><i class="ri-youtube-fill"></i></span> -->
-      </div>
     </div>
+    
 
     <script>
       const questionBox = document.getElementsByClassName("question__box");
@@ -358,12 +320,12 @@
 
         // Get keyword and quantity values from the form
         const keyword = document.getElementById('keyword').value;
-        const quantity = document.getElementById('quantity').value;
+        
 
         // Construct JSON object with keyword and quantity
         const data = {
             keyword: keyword,
-            quantity: quantity
+            // quantity: quantity
         };
 
         // Function to process streamed data and add listings to the table

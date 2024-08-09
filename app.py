@@ -15,10 +15,10 @@ def index():
 def scrape():
     # Get keyword and quantity from the form
     keyword = request.json['keyword']
-    quantity = int(request.json['quantity'])
+    # quantity = int(request.json['quantity'])
 
     # Call the scraping function with the keyword and quantity
-    scraped_data = main(keyword, quantity)
+    scraped_data = main(keyword)
 
     # Stream the scraped data back to the client
     def generate():

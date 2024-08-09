@@ -8,15 +8,15 @@ from email_validator import validate_email, EmailNotValidError
 @dataclass
 class Business:
     """holds business data"""
-    name: str = None
-    address: str = None
-    email: str = None  
-    website: str = None
-    phone_number: str = None
-    linkedin: str = None  
-    twitter: str = None 
-    facebook: str = None  
-    instagram: str = None  
+    name: str = None or "None"
+    address: str = None or "None"
+    email: str = None or "None"
+    website: str = None or "None"
+    phone_number: str = None or "None"
+    linkedin: str = None or "None"
+    twitter: str = None or "None"
+    facebook: str = None or "None"
+    instagram: str = None or "None"
 
 @dataclass
 class BusinessList:
@@ -30,13 +30,16 @@ def extract_coordinates_from_url(url: str) -> tuple[float,float]:
     # return latitude, longitude
     return float(coordinates.split(',')[0]), float(coordinates.split(',')[1])
 
-
 def extract_emails_from_page(page):
     """Extracts valid email addresses from a webpage"""
     email = extract_email_from_page_content(page.content())
     if email:
         # Check if the extracted email matches any placeholder pattern indicating a form
-        form_email_placeholders = ["youremail@email.com", "example@emailcom"]
+        form_email_placeholders = ["youremail@email.com", "example@emailcom", 
+                                   "youremail@mail.com", "yourmail@email.com", 
+                                   "yourmail@mail.com", "testsample@gmail.com", 
+                                   "testsample@mail.com", "testsample@email.com"]
+        
         if email.lower() in form_email_placeholders:
             return "no official email found. there was a form"
         
@@ -127,7 +130,7 @@ def extract_social_media_links(page):
     return social_media_links
 
 
-def main(search_term, quantity):
+def main(search_term, quantity=9999999):
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page()
