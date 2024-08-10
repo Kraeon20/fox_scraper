@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: foxscraper
+    env: python
+    region: oregon
+    buildCommand: pip install -r requirements.txt && playwright install-deps && playwright install
+    startCommand: gunicorn app:app
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
