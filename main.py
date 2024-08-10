@@ -140,14 +140,14 @@ def main(search_term, quantity=9999999):
         print("Navigating to Google Maps...")
         page.goto("https://www.google.com/maps")
         print("Navigation successful!")
-        # page.wait_for_timeout(5000)
+        page.wait_for_timeout(5000)
 
         print(f"-----\n{search_term}".strip())
 
         page.locator('//input[@id="searchboxinput"]').fill(search_term)
-        # page.wait_for_timeout(3000)
+        page.wait_for_timeout(3000)
         page.keyboard.press("Enter")
-        # page.wait_for_timeout(5000)
+        page.wait_for_timeout(5000)
         page.hover('//a[contains(@href, "https://www.google.com/maps/place")]')
 
         previously_counted = 0
