@@ -137,7 +137,9 @@ def main(search_term, quantity=9999999):
         browser = p.chromium.launch(headless=True)
         page = browser.new_page()
 
-        page.goto("https://www.google.com/maps", timeout=6000)
+        print("Navigating to Google Maps...")
+        page.goto("https://www.google.com/maps", timeout=30000)
+        print("Navigation successful!")
         page.wait_for_timeout(5000)
 
         print(f"-----\n{search_term}".strip())
