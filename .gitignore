@@ -4,6 +4,3 @@ __pycache__/
 #files to exclude
 test.py
 test-scraper.py
-Dockerfile
-Procfile
-render.yaml
