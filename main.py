@@ -3,7 +3,9 @@ from dataclasses import dataclass, asdict, field
 import time
 import re
 from email_validator import validate_email, EmailNotValidError
+import subprocess
 
+subprocess.run(["playwright", "install"])
 
 @dataclass
 class Business:
