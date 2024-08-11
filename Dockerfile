@@ -16,9 +16,8 @@ RUN pip install -r requirements.txt
 # Install Playwright and its dependencies
 RUN pip install playwright
 RUN playwright install
-RUN playwright install-deps
 # RUN playwright install-deps chromium
-
+RUN playwright install-deps
 
 # Copy the rest of the application files to the container
 COPY . /app

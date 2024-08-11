@@ -1,5 +1,6 @@
 # folders to exclude
 __pycache__/
+.github/
 
 #files to exclude
 test.py
