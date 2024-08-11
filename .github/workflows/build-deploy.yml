@@ -45,7 +45,7 @@ jobs:
         with:
           push: true
           context: .
-          tags: kraeon/foxscraper:v1.1
+          tags: kraeon/foxscraper:v1.01
 
   deploy-azure:
     needs: docker
