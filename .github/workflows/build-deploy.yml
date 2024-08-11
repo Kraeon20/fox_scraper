@@ -21,6 +21,7 @@ jobs:
       - name: install playwright dependencies
         run: |
           pip install playwright
+          playwright install
           playwright install --with-deps chromium
 
   docker:
