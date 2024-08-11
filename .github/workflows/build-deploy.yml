@@ -60,11 +60,11 @@ jobs:
       - name: "Run Azure CLI commands"
         run: |
           az containerapp up \
-            --name my-container-app \
-            --resource-group my-container-apps \
+            --name foxscraper \      
+            --resource-group foxleads \         
             --location centralus \
-            --environment 'my-container-apps' \
-            --image pedrojunqueira/mycontainer:latest \
+            --environment 'foxleads' \
+            --image kraeon/foxscraper:v1.01 \
             --target-port 80 \
             --ingress external \
             --query properties.configuration.ingress.fqdn
