@@ -49,14 +49,27 @@
           </h2>
         </p>
     </div>
-      <button class="btn">Start</button>
+      <button id="start-btn" class="btn">Start</button>
     </header>
 
+    <section class="section__container video__container" id="video">
+      <!-- <p class="section__subheader">Watch the Demo</p> -->
+      <h2 class="section__header">Watch the Demo</h2>
+      <div class="video__wrapper">
+        <video autoplay loop muted>
+          <source src="/static/videos/demo.mov" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </section>
+    
 
+    
     <section class="section__container scraping__container" id="scraping">
       <!-- Scraping section content -->
       <form id="scraping-form">
         <div class="input__container">
+          <h2 class="section__header">Start Scraping</h2>
           <label for="keyword">Keyword:</label>
           <input type="text" id="keyword" name="keyword" required>
         </div>
@@ -85,6 +98,7 @@
     </section>
     
     
+
     
     
     <section class="section__container service__container" id="data">
@@ -314,6 +328,21 @@
           }
         });
       });
+
+      // Smooth scrolling for Start Button
+      document.getElementById('start-btn').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent default action
+
+        const scrapingSection = document.getElementById('scraping');
+
+        if (scrapingSection) {
+          window.scrollTo({
+            top: scrapingSection.offsetTop - document.querySelector('.nav__container').offsetHeight,
+            behavior: 'smooth'
+          });
+        }
+      });
+
       
       document.getElementById('scrape-btn').addEventListener('click', function(event) {
         event.preventDefault(); // Prevent default form submission

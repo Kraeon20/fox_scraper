@@ -285,13 +285,45 @@ body {
   transform: translateX(5px);
 }
 
+/* Styles for the video section */
+.video__container {
+  padding: 8% 0;
+  text-align: center;
+  /* background-color: #f9f9f9; */
+}
+
+.video__container .section__subheader {
+  font-size: 1.5rem;
+  color: #333;
+  margin-top: 10%;
+  /* margin-bottom: 10%; */
+}
+
+.video__container .section__header {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.video__wrapper {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+video {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
 .scraping__container {
   width: 90%;
   background-color: white;
   padding: 2rem;
   border-radius: 10px;
   overflow-x: auto;
-  margin: 0 auto; /* Center the container horizontally */
+  margin: 0 auto;
 }
 
 .scraping__container form {
