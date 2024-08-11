@@ -16,8 +16,9 @@ RUN pip install -r requirements.txt
 # Install Playwright and its dependencies
 RUN pip install playwright
 RUN playwright install
-RUN playwright install-deps chromium
 RUN playwright install-deps
+# RUN playwright install-deps chromium
+
 
 # Copy the rest of the application files to the container
 COPY . /app
@@ -26,4 +27,4 @@ COPY . /app
 EXPOSE 5000
 
 # Command to run the application
-CMD ["gunicorn", "app:app"]
+CMD ["python3", "app.py"]
