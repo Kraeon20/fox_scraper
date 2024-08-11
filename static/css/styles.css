@@ -289,7 +289,7 @@ body {
 .video__container {
   padding: 8% 0;
   text-align: center;
-  /* background-color: #f9f9f9; */
+  margin: auto;
 }
 
 .video__container .section__subheader {

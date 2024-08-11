@@ -23,7 +23,7 @@ RUN playwright install-deps
 COPY . /app
 
 # Expose port
-EXPOSE 8000
+EXPOSE 80
 
 # Command to run the application
 CMD ["python3", "app.py"]
