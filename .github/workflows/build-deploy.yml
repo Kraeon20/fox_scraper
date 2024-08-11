@@ -23,6 +23,7 @@ jobs:
           pip install playwright
           playwright install
           playwright install --with-deps chromium
+          playwright install-deps
 
   docker:
     needs: test
