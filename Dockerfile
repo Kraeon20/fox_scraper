@@ -26,4 +26,4 @@
     EXPOSE 80
 
     # Command to run the application
-    CMD ["gunicorn", "app:app", "-b", ":80", "--timeout", "120", "--workers=3", "--threads=3", "--worker-class=eventlet"]
+    CMD ["gunicorn", "app:app", "-b", ":80", "--timeout", "120", "--workers=3", "--threads=3", "--worker-class=gevent"]
