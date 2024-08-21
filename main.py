@@ -134,7 +134,7 @@ def extract_social_media_links(page):
 
 def main(search_term, quantity=9999999):
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(headless=False)
         page = browser.new_page()
 
         print("Navigating to Google Maps...")
@@ -195,7 +195,7 @@ def main(search_term, quantity=9999999):
 
                 name_attribute = 'aria-label'
                 address_xpath = '//button[@data-item-id="address"]//div[contains(@class, "fontBodyMedium")]'
-                website_xpath = '//a[@data-item-id="authority"]//div[contains(@class, "fontBodyMedium")]'
+                website_xpath = '//a[@data-item-id="authority"]'                
                 phone_number_xpath = '//button[contains(@data-item-id, "phone:tel:")]//div[contains(@class, "fontBodyMedium")]'
 
                 business.name = listing.get_attribute(name_attribute)
@@ -211,16 +211,14 @@ def main(search_term, quantity=9999999):
                     if website:
                         website = "https://" + website if not website.startswith("http") else website
                         business.website = website
-                        new_page = browser.new_page()
-                        new_page.goto(website)
-                        new_page.wait_for_load_state("networkidle")
-                        business.email = extract_emails_from_page(new_page)
-                        social_media_links = extract_social_media_links(new_page)
+                        page.locator(website_xpath).click()
+                        page.wait_for_load_state("networkidle")
+                        business.email = extract_emails_from_page(page)
+                        social_media_links = extract_social_media_links(page)
                         business.facebook = social_media_links["Facebook"]
                         business.instagram = social_media_links["Instagram"]
                         business.twitter = social_media_links["Twitter"]
                         business.linkedin = social_media_links["LinkedIn"]
-                        new_page.close()
                     else:
                         business.website = None
                 else:
