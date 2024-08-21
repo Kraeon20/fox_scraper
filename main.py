@@ -33,48 +33,15 @@ def extract_coordinates_from_url(url: str) -> tuple[float,float]:
     return float(coordinates.split(',')[0]), float(coordinates.split(',')[1])
 
 def extract_emails_from_page(page):
-    """Extracts valid email addresses from a webpage"""
-    email = extract_email_from_page_content(page.content())
-    if email:
-        # Check if the extracted email matches any placeholder pattern indicating a form
-        form_email_placeholders = ["youremail@email.com", "example@emailcom", 
-                                   "youremail@mail.com", "yourmail@email.com", 
-                                   "yourmail@mail.com", "testsample@gmail.com", 
-                                   "testsample@mail.com", "testsample@email.com"]
-        
-        if email.lower() in form_email_placeholders:
-            return "no official email found. there was a form"
-        
-        # Validate the extracted email address
-        try:
-            email_info = validate_email(email, check_deliverability=True)
-            return email_info.normalized
-        except EmailNotValidError as e:
-            # If the email address is not valid or deliverable, return None
-            return "None"
-    
-    # If no valid email is found, search on other pages
-    other_pages = ["contact", "contact-us"]
-    for page_name in other_pages:
-        page.goto(f"{page.url}/{page_name}")
-        page.wait_for_load_state("networkidle")
-        email = extract_email_from_page_content(page.content())
-        if email:
-            # Check if the extracted email matches any placeholder pattern indicating a form
-            form_email_placeholders = ["youremail@email.com", "example@emailcom"]
-            if email.lower() in form_email_placeholders:
-                return "no official email found. there was a form"
-            
-            # Validate the extracted email address
-            try:
-                email_info = validate_email(email, check_deliverability=True)
-                return email_info.normalized
-            except EmailNotValidError as e:
-                # If the email address is not valid or deliverable, return None
-                return "None"
-    
-    # If no valid email is found, return "None" as a string
-    return "None"
+    """Extract email from a webpage using a regex pattern"""
+    # Get the entire page content
+    content = page.content()
+    # Regex pattern to find emails
+    email_pattern = r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
+    emails = re.findall(email_pattern, content)
+    # Return the first email found or None
+    return emails[0] if emails else "None"
+
 
 
 
@@ -134,7 +101,7 @@ def extract_social_media_links(page):
 
 def main(search_term, quantity=9999999):
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(headless=False)
         page = browser.new_page()
 
         print("Navigating to Google Maps...")
@@ -195,7 +162,7 @@ def main(search_term, quantity=9999999):
 
                 name_attribute = 'aria-label'
                 address_xpath = '//button[@data-item-id="address"]//div[contains(@class, "fontBodyMedium")]'
-                website_xpath = '//a[@data-item-id="authority"]'                
+                website_xpath = '//a[@data-item-id="authority"]//div[contains(@class, "fontBodyMedium")]'
                 phone_number_xpath = '//button[contains(@data-item-id, "phone:tel:")]//div[contains(@class, "fontBodyMedium")]'
 
                 business.name = listing.get_attribute(name_attribute)
@@ -211,14 +178,16 @@ def main(search_term, quantity=9999999):
                     if website:
                         website = "https://" + website if not website.startswith("http") else website
                         business.website = website
-                        page.locator(website_xpath).click()
-                        page.wait_for_load_state("networkidle")
-                        business.email = extract_emails_from_page(page)
-                        social_media_links = extract_social_media_links(page)
+                        new_page = browser.new_page()
+                        new_page.goto(website)
+                        new_page.wait_for_load_state("networkidle")
+                        business.email = extract_emails_from_page(new_page)
+                        social_media_links = extract_social_media_links(new_page)
                         business.facebook = social_media_links["Facebook"]
                         business.instagram = social_media_links["Instagram"]
                         business.twitter = social_media_links["Twitter"]
                         business.linkedin = social_media_links["LinkedIn"]
+                        new_page.close()
                     else:
                         business.website = None
                 else:
