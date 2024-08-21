@@ -26,4 +26,4 @@
     EXPOSE 8000
 
     # Command to run the application
-    CMD ["gunicorn", "app:app", "-b", ":8000", "--timeout", "120", "--workers=3", "--threads=3", "--worker-class=gevent"]
+    CMD ["gunicorn", "app:app", "-b", ":8000", "--timeout", "600", "--workers=3", "--threads=3", "--worker-class=gevent"]
