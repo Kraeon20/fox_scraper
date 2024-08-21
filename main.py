@@ -134,7 +134,7 @@ def extract_social_media_links(page):
 
 def main(search_term, quantity=9999999):
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
+        browser = p.chromium.launch(headless=True)
         page = browser.new_page()
 
         print("Navigating to Google Maps...")
