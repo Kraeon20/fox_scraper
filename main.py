@@ -44,7 +44,6 @@ def extract_emails_from_page(page):
 
 
 
-
 def extract_email_from_page_content(content):
     """Extracts a valid email address from webpage content"""
     email_pattern = r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
