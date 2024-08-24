@@ -7,3 +7,6 @@ test.py
 test-scraper.py
 render.yaml
 Procfile
+sandbox.py
+broofa.txt
+.env

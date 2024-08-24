@@ -2,10 +2,23 @@ from playwright.sync_api import sync_playwright
 from dataclasses import dataclass, asdict, field
 import time
 import re
-from email_validator import validate_email, EmailNotValidError
+import requests
+from dotenv import load_dotenv
+import os
+
+# from email_validator import validate_email, EmailNotValidError
 # import subprocess
 
 # subprocess.run(["playwright", "install"])
+
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Get the API key from the environment
+EMAIL_VALIDATOR_API_KEY = os.getenv('API_KEY')
+
+
 
 @dataclass
 class Business:
@@ -32,36 +45,37 @@ def extract_coordinates_from_url(url: str) -> tuple[float,float]:
     # return latitude, longitude
     return float(coordinates.split(',')[0]), float(coordinates.split(',')[1])
 
+def validate_email_api(email: str) -> bool:
+    url = "https://email-validator28.p.rapidapi.com/email-validator/validate"
+    querystring = {"email": email}
+
+    headers = {
+        "x-rapidapi-key": EMAIL_VALIDATOR_API_KEY,
+        "x-rapidapi-host": "email-validator28.p.rapidapi.com"
+    }
+
+    try:
+        response = requests.get(url, headers=headers, params=querystring)
+        response_data = response.json()
+        
+        if response_data["isValid"] and response_data["isDeliverable"]:
+            return True
+        else:
+            return False
+    except Exception as e:
+        print(f"Error validating email {email}: {e}")
+        return False
+
 def extract_emails_from_page(page):
-    """Extract email from a webpage using a regex pattern"""
-    # Get the entire page content
+    """Extract email from a webpage using a regex pattern and validate it"""
     content = page.content()
-    # Regex pattern to find emails
     email_pattern = r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
     emails = re.findall(email_pattern, content)
-    # Return the first email found or None
-    return emails[0] if emails else "None"
 
-
-
-def extract_email_from_page_content(content):
-    """Extracts a valid email address from webpage content"""
-    email_pattern = r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
-    emails = re.findall(email_pattern, content)
-    # Find the first valid email
     for email in emails:
-        if "@" in email:
+        if validate_email_api(email):
             return email
-    
-    # Extract the first email from mailto links
-    mailto_pattern = r"mailto:([^\s@]+@[^\s@]+\.[^\s@]+)"
-    mailto_emails = re.findall(mailto_pattern, content)
-    valid_mailto_email = validate_email(mailto_emails)
-
-    if valid_mailto_email:
-        return valid_mailto_email
-    
-    return None
+    return "None"
 
 
 def extract_social_media_links(page):
@@ -177,10 +191,13 @@ def main(search_term, quantity=9999999):
                     if website:
                         website = "https://" + website if not website.startswith("http") else website
                         business.website = website
-                        page.locator(website_xpath).click()
-                        page.wait_for_load_state("networkidle")
-                        business.email = extract_emails_from_page(page)
-                        social_media_links = extract_social_media_links(page)
+                        # Click on the link and wait for the new page to open
+                        with page.context.expect_page() as new_page_info:
+                            page.locator(website_xpath).click()
+                        new_page = new_page_info.value
+                        new_page.wait_for_load_state("networkidle")
+                        business.email = extract_emails_from_page(new_page)
+                        social_media_links = extract_social_media_links(new_page)
                         business.facebook = social_media_links["Facebook"]
                         business.instagram = social_media_links["Instagram"]
                         business.twitter = social_media_links["Twitter"]
@@ -189,6 +206,7 @@ def main(search_term, quantity=9999999):
                         business.website = None
                 else:
                     business.website = "None"
+
 
                 if page.locator(phone_number_xpath).count() > 0:
                     business.phone_number = page.locator(phone_number_xpath).all()[0].inner_text()
