@@ -3,7 +3,6 @@ from dataclasses import dataclass, asdict, field
 import time
 import re
 from email_validator import validate_email, EmailNotValidError
-import requests
 # import subprocess
 
 # subprocess.run(["playwright", "install"])
@@ -33,41 +32,7 @@ def extract_coordinates_from_url(url: str) -> tuple[float,float]:
     # return latitude, longitude
     return float(coordinates.split(',')[0]), float(coordinates.split(',')[1])
 
-def validate_email_api(email: str) -> bool:
-    url = "https://email-validator28.p.rapidapi.com/email-validator/validate"
-    querystring = {"email": email}
-
-    headers = {
-        "x-rapidapi-key": "dd318e0e99mshd99bb7bfe33dca1p1c4e65jsn472711ed868e",
-        "x-rapidapi-host": "email-validator28.p.rapidapi.com"
-    }
-
-    try:
-        response = requests.get(url, headers=headers, params=querystring)
-        response_data = response.json()
-        
-        if response_data["isValid"] and response_data["isDeliverable"]:
-            return True
-        else:
-            return False
-    except Exception as e:
-        print(f"Error validating email {email}: {e}")
-        return False
-
-# def extract_emails_from_page(page):
-#     """Extract email from a webpage using a regex pattern and validate it"""
-#     content = page.content()
-#     email_pattern = r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
-#     emails = re.findall(email_pattern, content)
-
-#     for email in emails:
-#         if validate_email_api(email):
-#             return email
-#     return "None"
-
-
-
-def extract_email_from_website(page):
+def extract_emails_from_page(page):
     """Extract email from a webpage using a regex pattern"""
     # Get the entire page content
     content = page.content()
@@ -76,6 +41,29 @@ def extract_email_from_website(page):
     emails = re.findall(email_pattern, content)
     # Return the first email found or None
     return emails[0] if emails else "None"
+
+
+
+
+def extract_email_from_page_content(content):
+    """Extracts a valid email address from webpage content"""
+    email_pattern = r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+    emails = re.findall(email_pattern, content)
+    # Find the first valid email
+    for email in emails:
+        if "@" in email:
+            return email
+    
+    # Extract the first email from mailto links
+    mailto_pattern = r"mailto:([^\s@]+@[^\s@]+\.[^\s@]+)"
+    mailto_emails = re.findall(mailto_pattern, content)
+    valid_mailto_email = validate_email(mailto_emails)
+
+    if valid_mailto_email:
+        return valid_mailto_email
+    
+    return None
+
 
 def extract_social_media_links(page):
     """Extracts social media links from a webpage"""
@@ -174,7 +162,7 @@ def main(search_term, quantity=9999999):
 
                 name_attribute = 'aria-label'
                 address_xpath = '//button[@data-item-id="address"]//div[contains(@class, "fontBodyMedium")]'
-                website_xpath = '//a[@data-item-id="authority"]'                
+                website_xpath = '//a[@data-item-id="authority"]'
                 phone_number_xpath = '//button[contains(@data-item-id, "phone:tel:")]//div[contains(@class, "fontBodyMedium")]'
 
                 business.name = listing.get_attribute(name_attribute)
@@ -188,10 +176,11 @@ def main(search_term, quantity=9999999):
                 if page.locator(website_xpath).count() > 0:
                     website = page.locator(website_xpath).all()[0].inner_text()
                     if website:
+                        website = "https://" + website if not website.startswith("http") else website
                         business.website = website
                         page.locator(website_xpath).click()
                         page.wait_for_load_state("networkidle")
-                        business.email = extract_email_from_website(page)
+                        business.email = extract_emails_from_page(page)
                         social_media_links = extract_social_media_links(page)
                         business.facebook = social_media_links["Facebook"]
                         business.instagram = social_media_links["Instagram"]
