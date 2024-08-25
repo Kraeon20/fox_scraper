@@ -7,6 +7,8 @@ from dotenv import load_dotenv
 import os
 
 # from email_validator import validate_email, EmailNotValidError
+# from email_validator import validate_email, EmailNotValidError
+
 # import subprocess
 
 # subprocess.run(["playwright", "install"])
@@ -15,7 +17,8 @@ import os
 # Load environment variables from .env file
 load_dotenv()
 
-# Get the API key from the environment
+
+
 EMAIL_VALIDATOR_API_KEY = os.getenv('API_KEY')
 
 
@@ -114,7 +117,7 @@ def extract_social_media_links(page):
 
 def main(search_term, quantity=9999999):
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
+        browser = p.chromium.launch(headless=True)
         page = browser.new_page()
 
         print("Navigating to Google Maps...")
