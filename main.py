@@ -19,7 +19,7 @@ load_dotenv()
 
 
 
-EMAIL_VALIDATOR_API_KEY = os.getenv('API_KEY')
+EMAIL_VALIDATOR_API_KEY = os.getenv('EMAIL_VALIDATOR_API_KEY')
 
 
 
