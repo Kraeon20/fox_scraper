@@ -6,19 +6,8 @@ import requests
 from dotenv import load_dotenv
 import os
 
-# from email_validator import validate_email, EmailNotValidError
-# from email_validator import validate_email, EmailNotValidError
 
-# import subprocess
-
-# subprocess.run(["playwright", "install"])
-
-
-# Load environment variables from .env file
 load_dotenv()
-
-
-
 EMAIL_VALIDATOR_API_KEY = os.getenv('EMAIL_VALIDATOR_API_KEY')
 
 
@@ -45,7 +34,6 @@ def extract_coordinates_from_url(url: str) -> tuple[float,float]:
     """helper function to extract coordinates from url"""
     
     coordinates = url.split('/@')[-1].split('/')[0]
-    # return latitude, longitude
     return float(coordinates.split(',')[0]), float(coordinates.split(',')[1])
 
 def validate_email_api(email: str) -> bool:
@@ -99,8 +87,7 @@ def extract_social_media_links(page):
         else:
             social_media_links[platform] = "None"
 
-    # LinkedIn may have different patterns for personal and company profiles
-    # Search for both patterns and prioritize company profiles
+
     linkedin_pattern_company = r"https?://(www\.)?linkedin\.com/company/([\w-]+)/?"
     linkedin_pattern_personal = r"https?://(www\.)?linkedin\.com/in/([\w-]+)/?"
 
@@ -136,43 +123,28 @@ def main(search_term, quantity=9999999):
         previously_counted = 0
         while True:
             page.mouse.wheel(0, 10000)
-            href = page.evaluate('() => document.location.href')
-            page.wait_for_timeout(3000)
+            page.wait_for_timeout(2000)
 
-            if (
-                page.locator(
-                    '//a[contains(@href, "https://www.google.com/maps/place")]'
-                ).count()
-                >= quantity
-            ):
-                time.sleep(5) # Wait for 5 seconds
-                listings = page.locator(
-                    '//a[contains(@href, "https://www.google.com/maps/place")]'
-                ).all()[:quantity]
+            count = page.locator('//a[contains(@href, "https://www.google.com/maps/place")]').count()
+            if count >= quantity:
+                time.sleep(5)
+                listings = page.locator('//a[contains(@href, "https://www.google.com/maps/place")]').all()[:quantity]
                 break
             else:
-                if (
-                    page.locator(
-                        '//a[contains(@href, "https://www.google.com/maps/place")]'
-                    ).count()
-                    == previously_counted
-                ):
-                    listings = page.locator(
-                        '//a[contains(@href, "https://www.google.com/maps/place")]'
-                    ).all()
+                if count == previously_counted:
+                    listings = page.locator('//a[contains(@href, "https://www.google.com/maps/place")]').all()
                     print(f"Arrived at all available\nTotal Scraped: {len(listings)}")
                     break
                 else:
-                    previously_counted = page.locator(
-                        '//a[contains(@href, "https://www.google.com/maps/place")]'
-                    ).count()
+                    previously_counted = count
+        
+        print(f"Found {len(listings)} listings")
 
-        business_list = BusinessList()
 
         for listing in listings:
             try:
                 listing.click()
-                page.wait_for_timeout(5000)
+                page.wait_for_timeout(1000)
 
                 business = Business()
 
@@ -194,7 +166,6 @@ def main(search_term, quantity=9999999):
                     if website:
                         website = "https://" + website if not website.startswith("http") else website
                         business.website = website
-                        # Click on the link and wait for the new page to open
                         with page.context.expect_page() as new_page_info:
                             page.locator(website_xpath).click()
                         new_page = new_page_info.value
