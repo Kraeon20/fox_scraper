@@ -14,6 +14,7 @@ Jinja2==3.1.4
 MarkupSafe==2.1.5
 openpyxl==3.1.2
 pyee==11.1.0
+pandas
 playwright
 python-dateutil==2.9.0.post0
 python-dotenv==1.0.1

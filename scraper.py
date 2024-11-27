@@ -1,177 +1,127 @@
-import os
-import pandas as pd
-from dataclasses import asdict, dataclass, field
-import requests
-import re
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 import time
-from playwright.sync_api import sync_playwright
+import re
 
-EMAIL_VALIDATOR_API_KEY = os.getenv('EMAIL_VALIDATOR_API_KEY')
-
-@dataclass
 class Business:
-    """holds business data"""
-    name: str = "None"
-    address: str = "None"
-    email: str = "None"
-    website: str = "None"
-    phone_number: str = "None"
-    linkedin: str = "None"
-    twitter: str = "None"
-    facebook: str = "None"
-    instagram: str = "None"
+    def __init__(self):
+        self.name = ""
+        self.address = ""
+        self.website = ""
+        self.phone_number = ""
 
-@dataclass
 class BusinessList:
-    """holds list of Business objects"""
-    business_list: list[Business] = field(default_factory=list)
+    def __init__(self):
+        self.businesses = []
 
-def validate_email_api(email: str) -> bool:
-    url = "https://email-validator28.p.rapidapi.com/email-validator/validate"
-    querystring = {"email": email}
+    def add_business(self, business):
+        self.businesses.append(business)
 
-    headers = {
-        "x-rapidapi-key": EMAIL_VALIDATOR_API_KEY,
-        "x-rapidapi-host": "email-validator28.p.rapidapi.com"
-    }
+def wait_for_element(driver, by, value, timeout=10):
+    return WebDriverWait(driver, timeout).until(EC.presence_of_element_located((by, value)))
 
-    try:
-        response = requests.get(url, headers=headers, params=querystring)
-        response_data = response.json()
-        return response_data.get("isValid", False) and response_data.get("isDeliverable", False)
-    except Exception as e:
-        print(f"Error validating email {email}: {e}")
-        return False
+def main(search_term, quantity):
+    driver = webdriver.Chrome()
+    driver.maximize_window()
 
-def extract_emails_from_page(page):
-    """Extract email from a webpage using a regex pattern and validate it"""
-    content = page.content()
-    email_pattern = r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
-    emails = re.findall(email_pattern, content)
+    driver.get("https://www.google.com/maps")
 
-    for email in emails:
-        if validate_email_api(email):
-            return email
-    return "None"
+    # Enter search term
+    search_box = wait_for_element(driver, By.ID, "searchboxinput")
+    search_box.send_keys(search_term)
+    search_box.send_keys(Keys.RETURN)
+    time.sleep(5)  # Wait for search results to load
 
-def extract_social_media_links(page):
-    """Extracts social media links from a webpage"""
-    social_media_links = {
-        "Facebook": "None",
-        "Instagram": "None",
-        "Twitter": "None",
-        "LinkedIn": "None"
-    }
-    
-    # Search for social media links
-    for platform in social_media_links.keys():
-        pattern = rf"https?:\/\/(www\.)?{platform.lower()}\.com\/(\w+)\/?"
-        match = re.search(pattern, page.content())
-        if match:
-            social_media_links[platform] = match.group(0)
+    # Locate the scrollable container for the listings
+    listings_container = wait_for_element(driver, By.XPATH, '//div[contains(@aria-label, "Results for")]')
 
-    return social_media_links
+    # Scroll within the container until we get enough listings
+    previously_counted = 0
+    while True:
+        # Scroll down within the listings container
+        driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", listings_container)
+        time.sleep(2)
 
-def main(search_term, quantity=30):
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
-        page = browser.new_page()
+        # Retrieve the listings links
+        listings = driver.find_elements(By.XPATH, '//a[contains(@href, "https://www.google.com/maps/place")]')
+        count = len(listings)
 
-        page.goto("https://www.google.com/maps")
-        # wait is added for dev phase. can remove it in production
-        # page.wait_for_timeout(5000)
-        
+        if count >= quantity:
+            time.sleep(2)
+            listings = listings[:quantity]
+            break
+        elif count == previously_counted:
+            print(f"Arrived at all available listings, total: {count}")
+            break
+        else:
+            previously_counted = count
 
-        page.locator('//input[@id="searchboxinput"]').fill(search_term)
-        # page.wait_for_timeout(3000)
+    print(f"Found {len(listings)} listings")
 
-        page.keyboard.press("Enter")
-        # page.wait_for_timeout(5000)
+    business_list = BusinessList()
 
-        # scrolling
-        page.hover('//a[contains(@href, "https://www.google.com/maps/place")]')
+    for listing in listings:
+        try:
+            listing.click()
+            time.sleep(2)
 
-    
-        previously_counted = 0
-        while True:
-            page.mouse.wheel(0, 10000)
-            page.wait_for_timeout(2000)
+            business = Business()
 
-            count = page.locator('//a[contains(@href, "https://www.google.com/maps/place")]').count()
-            if count >= quantity:
-                time.sleep(5)
-                listings = page.locator('//a[contains(@href, "https://www.google.com/maps/place")]').all()[:quantity]
-                break
-            else:
-                if count == previously_counted:
-                    listings = page.locator('//a[contains(@href, "https://www.google.com/maps/place")]').all()
-                    print(f"Arrived at all available\nTotal Scraped: {len(listings)}")
-                    break
+            name_attribute = 'aria-label'
+            address_xpath = '//button[@data-item-id="address"]//div[contains(@class, "fontBodyMedium")]'
+            website_xpath = '//a[@data-item-id="authority"]'
+            website_domain_xpath = '//a[@data-item-id="authority"]//div[contains(@class, "fontBodyMedium")]'
+            phone_number_xpath = '//button[contains(@data-item-id, "phone:tel:")]//div[contains(@class, "fontBodyMedium")]'
+
+            # Extracting name
+            business.name = listing.get_attribute(name_attribute)
+            if business.name:
+                match = re.search(r"^[^·]+", business.name)
+                if match:
+                    business.name = match.group(0).strip()
                 else:
-                    previously_counted = count
-        
-        print(f"Found {len(listings)} listings")
+                    business.name = business.name.strip()
 
-
-        business_list = BusinessList()
-
-        for listing in listings:
+            # Extracting address
             try:
-                listing.click()
-                page.wait_for_timeout(1000)
+                business.address = driver.find_element(By.XPATH, address_xpath).text
+            except NoSuchElementException:
+                business.address = "None"
 
+            # Extracting website
+            try:
+                business.website = driver.find_element(By.XPATH, website_domain_xpath).text
+            except NoSuchElementException:
+                business.website = "None"
 
-                business = Business()
+            # Extracting phone number
+            try:
+                business.phone_number = driver.find_element(By.XPATH, phone_number_xpath).text
+            except NoSuchElementException:
+                business.phone_number = "None"
 
-                name_attribute = 'aria-label'
-                address_xpath = '//button[@data-item-id="address"]//div[contains(@class, "fontBodyMedium")]'
-                website_xpath = '//a[@data-item-id="authority"]'
-                website_domain_xpath = '//a[@data-item-id="authority"]//div[contains(@class, "fontBodyMedium")]'
-                phone_number_xpath = '//button[contains(@data-item-id, "phone:tel:")]//div[contains(@class, "fontBodyMedium")]'
+            business_list.add_business(business)
 
+            # Return to the main listing page
+            driver.back()
+            time.sleep(2)
 
-                
-                business.name = listing.get_attribute(name_attribute)
-                if business.name:
-                    match = re.search(r"^[^·]+", business.name)
-                    if match:
-                        business.name = match.group(0).strip()
-                    else:
-                        business.name = business.name.strip()
-                        
-                business.address = page.locator(address_xpath).inner_text() if page.locator(address_xpath).count() > 0 else "None"
-                business.website = page.locator(website_domain_xpath).inner_text() if page.locator(website_domain_xpath).count() > 0 else "None"
-                business.phone_number = page.locator(phone_number_xpath).inner_text() if page.locator(phone_number_xpath).count() > 0 else "None"
+        except Exception as e:
+            print(f"Error processing listing: {e}")
 
-                if business.website != "None":
-                    with page.context.expect_page() as new_page_info:
-                        page.locator(website_xpath).click()
-                    new_page = new_page_info.value
-                    new_page.wait_for_load_state("networkidle")
-                    business.email = extract_emails_from_page(new_page)
-                    social_media_links = extract_social_media_links(new_page)
-                    business.facebook = social_media_links["Facebook"]
-                    business.instagram = social_media_links["Instagram"]
-                    business.twitter = social_media_links["Twitter"]
-                    business.linkedin = social_media_links["LinkedIn"]
+    # Outputting collected data
+    for business in business_list.businesses:
+        print(f"Name: {business.name}")
+        print(f"Address: {business.address}")
+        print(f"Website: {business.website}")
+        print(f"Phone: {business.phone_number}")
+        print("-" * 40)
 
-                try:
-                    # Scraping logic
-                    business_list.business_list.append(business)
-                    print(f"Processed: {business.name}")
-                except Exception as e:
-                    print(f'Error occurred while processing {business.name}: {e}')
-                    business_list.business_list.append(business)
+    driver.quit()
 
-            except Exception as e:
-                print(f'Error occurred: {e}')
-
-        data = [asdict(business) for business in business_list.business_list]
-        df = pd.DataFrame(data)
-        df.to_excel('business_data.xlsx', index=False)
-        print("Data saved to business_data.xlsx")
-
-        browser.close()
-
-if __name__ == "__main__":
-    main("gift shops IN BRONX, NEW YORK")
+# Usage example
+main("cafes in New York", 10)

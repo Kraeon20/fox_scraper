@@ -1,423 +1,435 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
-    <link
-      href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css"
-      rel="stylesheet"
-    />
-    <title>FOXLEADS</title>
-  </head>
-  <body>
-    <nav class="section__container nav__container">
-      <div class="nav__logo">
-        <span class="fox-letters"></span>
-        <span class="fox-logo">
-          <img src="/static/assets/background.png" alt="Fox Logo">
-        </span>
-        <span class="fox-letters">LEADS_</span>
-      </div>
-      <input type="checkbox" id="nav-toggle" class="nav__toggle" />
-      <label for="nav-toggle" class="nav__burger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </label>
-      <ul class="nav__links">
-        <li class="link"><a href="#home">Home</a></li>
-        <!-- <li class="link"><a href="#pricing">Pricing</a></li> -->
-        <li class="link"><a href="#data">Data</a></li>
-        <li class="link"><a href="#about">About</a></li>
-        <li class="link"><a href="#about">Donate</a></li>
-        <li class="link"><a href="#faq">FAQ</a></li>
-        <button class="btn">Start</button>
 
-      </ul>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css" rel="stylesheet" />
+  <title>FOXLEADS</title>
+</head>
+
+<body>
+  <nav class="section__container nav__container">
+    <div class="nav__logo">
+      <span class="fox-letters"></span>
+      <span class="fox-logo">
+        <img src="/static/assets/background.png" alt="Fox Logo">
+      </span>
+      <span class="fox-letters">LEADS_</span>
+    </div>
+    <input type="checkbox" id="nav-toggle" class="nav__toggle" />
+    <label for="nav-toggle" class="nav__burger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+    <ul class="nav__links">
+      <li class="link"><a href="#home">Home</a></li>
+      <!-- <li class="link"><a href="#pricing">Pricing</a></li> -->
+      <li class="link"><a href="#data">Data</a></li>
+      <li class="link"><a href="#about">About</a></li>
+      <li class="link"><a href="#about">Donate</a></li>
+      <li class="link"><a href="#faq">FAQ</a></li>
+      <button class="btn">Start</button>
+
+    </ul>
   </nav>
   <header class="section__container header__container" id="home">
     <h1 class="section__header">
-        Scrape Google Maps,<br />
-        with <span>ease.</span>
+      Scrape Google Maps,<br />
+      with <span>ease.</span>
     </h1>
     <img src="/static/assets/background.png" alt="background">
     <div class="paragraph__container">
-        <p class="paragraph__text">
-          <h2 style="color: rgb(16, 17, 17);">
-            Bridging the gap between Businesses and Genuine Prospects        
-          </h2>
-        </p>
+      <p class="paragraph__text">
+      <h2 style="color: rgb(16, 17, 17);">
+        Bridging the gap between Businesses and Genuine Prospects
+      </h2>
+      </p>
     </div>
-      <button id="start-btn" class="btn">Start</button>
-    </header>
+    <button id="start-btn" class="btn">Start</button>
+  </header>
 
-    <section class="section__container video__container" id="video">
-      <!-- <p class="section__subheader">Watch the Demo</p> -->
-      <h2 class="section__header">Watch the Demo</h2>
-      <div class="video__wrapper">
-        <video autoplay loop muted>
-          <source src="/static/videos/demo.mov" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
+  <section class="section__container video__container" id="video">
+    <!-- <p class="section__subheader">Watch the Demo</p> -->
+    <h2 class="section__header">Watch the Demo</h2>
+    <div class="video__wrapper">
+      <video autoplay loop muted>
+        <source src="/static/videos/demo.mov" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </section>
+
+
+
+  <section class="section__container scraping__container" id="scraping">
+    <!-- Scraping section content -->
+    <form id="scraping-form">
+      <div class="input__container">
+        <h2 class="section__header">Start Scraping</h2>
+        <label for="keyword">Keyword:</label>
+        <input type="text" id="keyword" name="keyword" required>
       </div>
-    </section>
-    
+      <button id="scrape-btn" class="btn">Scrape</button>
+    </form>
+    <div class="table__container">
+      <table id="scraped-data">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Email</th>
+            <th>Website</th>
+            <th>Phone</th>
+            <th>LinkedIn</th>
+            <th>Twitter</th>
+            <th>Facebook</th>
+            <th>Instagram</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+          <!-- Data will be populated here -->
+        </tbody>
+      </table>
+    </div>
+  </section>
 
-    
-    <section class="section__container scraping__container" id="scraping">
-      <!-- Scraping section content -->
-      <form id="scraping-form">
-        <div class="input__container">
-          <h2 class="section__header">Start Scraping</h2>
-          <label for="keyword">Keyword:</label>
-          <input type="text" id="keyword" name="keyword" required>
+
+
+
+
+  <section class="section__container service__container" id="data">
+    <p class="section__subheader">Data Services</p>
+    <h2 class="section__header">What Information Can FoxLeads Gather?</h2>
+    <div class="service__grid">
+      <div class="service__card">
+        <div class="service__icon">
+          <img src="/static/assets/id-card.png" alt="Name" />
         </div>
-        <button id="scrape-btn" class="btn">Scrape</button>
-      </form>
-      <div class="table__container">
-        <table id="scraped-data">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Address</th>
-              <th>Email</th>
-              <th>Website</th>
-              <th>Phone</th>
-              <th>LinkedIn</th>
-              <th>Twitter</th>
-              <th>Facebook</th>
-              <th>Instagram</th>
-            </tr>
-          </thead>
-          <tbody id="table-body">
-            <!-- Data will be populated here -->
-          </tbody>
-        </table>
+        <h4>Name</h4>
+        <p>FoxLeads can gather accurate names of individuals or businesses.</p>
       </div>
-    </section>
-    
-    
+      <div class="service__card">
+        <div class="service__icon">
+          <img src="/static/assets/map.png" alt="Address" />
+        </div>
+        <h4>Address</h4>
+        <p>Obtain physical addresses of businesses or individuals.</p>
+      </div>
+      <div class="service__card">
+        <div class="service__icon">
+          <img src="/static/assets/mail.png" alt="Email" />
+        </div>
+        <h4>Email</h4>
+        <p>Gather email addresses associated with businesses or individuals.</p>
+      </div>
+      <div class="service__card">
+        <div class="service__icon">
+          <img src="/static/assets/phone-call.png" alt="Phone Number" />
+        </div>
+        <h4>Phone Number</h4>
+        <p>Retrieve phone numbers linked to businesses or individuals.</p>
+      </div>
+      <div class="service__card">
+        <div class="service__icon">
+          <img src="/static/assets/linkedin.png" alt="LinkedIn Profile" />
+        </div>
+        <h4>LinkedIn Profile</h4>
+        <p>Access LinkedIn profiles connected to businesses or individuals.</p>
+        <a href="#" class="learn-more">
+          Learn more <span class="arrow-icon">&rarr;</span>
+        </a>
+      </div>
+      <div class="service__card">
+        <div class="service__icon">
+          <img src="/static/assets/twitter.png" alt="Twitter Profile" />
+        </div>
+        <h4>Twitter Profile</h4>
+        <p>Obtain Twitter handles associated with businesses or individuals.</p>
+      </div>
+      <div class="service__card">
+        <div class="service__icon">
+          <img src="/static/assets/facebook.png" alt="Facebook Page" />
+        </div>
+        <h4>Facebook Page</h4>
+        <p>Gather Facebook profiles linked to businesses or individuals.</p>
+      </div>
+      <div class="service__card">
+        <div class="service__icon">
+          <img src="/static/assets/instagram.png" alt="Instagram Page" />
+        </div>
+        <h4>Instagram Page</h4>
+        <p>Access Instagram handles connected to businesses or individuals.</p>
+      </div>
+    </div>
+  </section>
 
-    
-    
-    <section class="section__container service__container" id="data">
-      <p class="section__subheader">Data Services</p>
-      <h2 class="section__header">What Information Can FoxLeads Gather?</h2>
-      <div class="service__grid">
-          <div class="service__card">
-              <div class="service__icon">
-                  <img src="/static/assets/id-card.png" alt="Name" />
-              </div>
-              <h4>Name</h4>
-              <p>FoxLeads can gather accurate names of individuals or businesses.</p>
-          </div>
-          <div class="service__card">
-              <div class="service__icon">
-                  <img src="/static/assets/map.png" alt="Address" />
-              </div>
-              <h4>Address</h4>
-              <p>Obtain physical addresses of businesses or individuals.</p>
-          </div>
-          <div class="service__card">
-              <div class="service__icon">
-                  <img src="/static/assets/mail.png" alt="Email" />
-              </div>
-              <h4>Email</h4>
-              <p>Gather email addresses associated with businesses or individuals.</p>
-          </div>
-          <div class="service__card">
-              <div class="service__icon">
-                  <img src="/static/assets/phone-call.png" alt="Phone Number" />
-              </div>
-              <h4>Phone Number</h4>
-              <p>Retrieve phone numbers linked to businesses or individuals.</p>
-          </div>
-          <div class="service__card">
-              <div class="service__icon">
-                  <img src="/static/assets/linkedin.png" alt="LinkedIn Profile" />
-              </div>
-              <h4>LinkedIn Profile</h4>
-              <p>Access LinkedIn profiles connected to businesses or individuals.</p>
-              <a href="#" class="learn-more">
-                  Learn more <span class="arrow-icon">&rarr;</span>
-              </a>
-          </div>
-          <div class="service__card">
-              <div class="service__icon">
-                  <img src="/static/assets/twitter.png" alt="Twitter Profile" />
-              </div>
-              <h4>Twitter Profile</h4>
-              <p>Obtain Twitter handles associated with businesses or individuals.</p>
-          </div>
-          <div class="service__card">
-              <div class="service__icon">
-                  <img src="/static/assets/facebook.png" alt="Facebook Page" />
-              </div>
-              <h4>Facebook Page</h4>
-              <p>Gather Facebook profiles linked to businesses or individuals.</p>
-          </div>
-          <div class="service__card">
-              <div class="service__icon">
-                  <img src="/static/assets/instagram.png" alt="Instagram Page" />
-              </div>
-              <h4>Instagram Page</h4>
-              <p>Access Instagram handles connected to businesses or individuals.</p>
-          </div>
+
+  <section class="section__container template__container" id="about">
+    <div class="template__content">
+      <p class="section__subheader">About My Project</p>
+      <h2 class="section__header">Exploring Data on Google Maps</h2>
+      <p class="description">
+        Hey there! <br>So, I've been tinkering around with Google Maps lately,
+        and I've come up with something pretty cool.
+        You know how businesses are always looking for ways to connect with potential customers?
+        Well, I thought, why not help them out a bit?
+        This project basically dives into Google Maps and pulls out publicly available info like
+        names, addresses, emails, phone numbers, and even social media profiles like
+        Facebook, LinkedIn, Instagram, and Twitter. It's all about making those connections easier for everyone
+        involved.
+        And guess what? I built it using <a href="https://www.python.org/" style="color: rgb(34, 255, 0);">Python</a>
+        and <a href="https://playwright.dev/" style="color: rgb(34, 255, 0);">Playwright</a>.
+        <br>It's been quite the journey, but I'm really proud of how it's turned out!
+      </p>
+    </div>
+    <div class="template__image">
+      <img src="/static/assets/scraping.jpg" alt="template" />
+    </div>
+  </section>
+
+
+  <section class="section__container question__container" id="faq">
+    <p class="section__subheader">Got Questions?</p>
+    <h2 class="section__header">Frequently Asked Questions</h2>
+    <div class="question__accordian">
+      <!-- Existing FAQ items -->
+      <div class="question__box">
+        <div class="title">
+          <span>Is your project free to use?</span>
+          <span class="icon"><i class="ri-add-fill"></i></span>
+        </div>
+        <div class="content">
+          Yes, my project is completely free to use! However, maintaining and improving it takes time and effort. If you
+          find it helpful and would like to support its continued development, you can contribute by donating. Your
+          donations help keep the project running smoothly and ensure ongoing updates and improvements.
+        </div>
       </div>
-    </section>
-  
-    
-    <section class="section__container template__container" id="about">
-      <div class="template__content">
-        <p class="section__subheader">About My Project</p>
-        <h2 class="section__header">Exploring Data on Google Maps</h2>
-        <p class="description">
-          Hey there! <br>So, I've been tinkering around with Google Maps lately, 
-          and I've come up with something pretty cool. 
-          You know how businesses are always looking for ways to connect with potential customers? 
-          Well, I thought, why not help them out a bit? 
-          This project basically dives into Google Maps and pulls out publicly available info like 
-          names, addresses, emails, phone numbers, and even social media profiles like 
-          Facebook, LinkedIn, Instagram, and Twitter. It's all about making those connections easier for everyone involved. 
-          And guess what? I built it using <a href="https://www.python.org/" style="color: rgb(34, 255, 0);">Python</a> and <a href="https://playwright.dev/" style="color: rgb(34, 255, 0);">Playwright</a>. 
-          <br>It's been quite the journey, but I'm really proud of how it's turned out!
+
+      <div class="question__box">
+        <div class="title">
+          <span>What does your project do?</span>
+          <span class="icon"><i class="ri-add-fill"></i></span>
+        </div>
+        <div class="content">
+          My project offers a way to explore and extract data from Google Maps. It can retrieve various information such
+          as names, addresses, emails, phone numbers, and even social media profiles like Facebook, LinkedIn, Instagram,
+          and Twitter.
+        </div>
+      </div>
+      <div class="question__box">
+        <div class="title">
+          <span>How can your project benefit me?</span>
+          <span class="icon"><i class="ri-add-fill"></i></span>
+        </div>
+        <div class="content">
+          This project can be incredibly useful for anyone looking to gather information from Google Maps. Whether
+          you're a researcher, a curious explorer, or just someone who loves data, my project provides a tool to dive
+          deep into the wealth of information available on Google Maps.
+        </div>
+      </div>
+      <div class="question__box">
+        <div class="title">
+          <span>What formats can I get the data in?</span>
+          <span class="icon"><i class="ri-add-fill"></i></span>
+        </div>
+        <div class="content">
+          The data extracted by my project can be obtained in various formats such as CSV and Excel files. This
+          flexibility allows you to easily integrate the data into your own projects or workflows.
+        </div>
+      </div>
+      <div class="question__box">
+        <div class="title">
+          <span>Is your project suitable for beginners?</span>
+          <span class="icon"><i class="ri-add-fill"></i></span>
+        </div>
+        <div class="content">
+          Absolutely! My project is designed with simplicity in mind, making it accessible for beginners who want to
+          explore the world of web scraping and data extraction.
+        </div>
+      </div>
+      <div class="question__box">
+        <div class="title">
+          <span>Can I customize your project to suit my needs?</span>
+          <span class="icon"><i class="ri-add-fill"></i></span>
+        </div>
+        <div class="content">
+          Yes, definitely! My project is open for customization, allowing you to tailor it according to your specific
+          requirements. Whether you need additional features or modifications, feel free to adapt it to suit your needs.
+        </div>
+      </div>
+
+      <div class="question__box">
+        <div class="title">
+          <span>How secure is your project?</span>
+          <span class="icon"><i class="ri-add-fill"></i></span>
+        </div>
+        <div class="content">
+          Security is a top priority for my project. I've implemented robust encryption and data protection measures to
+          ensure that your information remains safe and secure while using the tool.
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <footer class="section__container footer__container">
+    <div class="footer__grid">
+      <div class="footer__col footer__logo-col">
+        <div class="footer__logo">
+          <!-- Replace "WDM" with the fox logo -->
+          <img src="/static/assets/background.png" alt="Fox Logo">
+        </div>
+        <p>
+          <span><i class="ri-mail-fill"></i></span> williams.asante515@gmail.com
         </p>
-      </div>
-      <div class="template__image">
-        <img src="/static/assets/scraping.jpg" alt="template" />
-      </div>
-    </section>
-
- 
-    <section class="section__container question__container" id="faq">
-      <p class="section__subheader">Got Questions?</p>
-      <h2 class="section__header">Frequently Asked Questions</h2>
-      <div class="question__accordian">
-        <!-- Existing FAQ items -->
-        <div class="question__box">
-          <div class="title">
-            <span>Is your project free to use?</span>
-            <span class="icon"><i class="ri-add-fill"></i></span>
-          </div>
-          <div class="content">
-            Yes, my project is completely free to use! However, maintaining and improving it takes time and effort. If you find it helpful and would like to support its continued development, you can contribute by donating. Your donations help keep the project running smoothly and ensure ongoing updates and improvements.
-          </div>
-        </div>
-      
-        <div class="question__box">
-          <div class="title">
-            <span>What does your project do?</span>
-            <span class="icon"><i class="ri-add-fill"></i></span>
-          </div>
-          <div class="content">
-            My project offers a way to explore and extract data from Google Maps. It can retrieve various information such as names, addresses, emails, phone numbers, and even social media profiles like Facebook, LinkedIn, Instagram, and Twitter.
-          </div>
-        </div>
-        <div class="question__box">
-          <div class="title">
-            <span>How can your project benefit me?</span>
-            <span class="icon"><i class="ri-add-fill"></i></span>
-          </div>
-          <div class="content">
-            This project can be incredibly useful for anyone looking to gather information from Google Maps. Whether you're a researcher, a curious explorer, or just someone who loves data, my project provides a tool to dive deep into the wealth of information available on Google Maps.
-          </div>
-        </div>
-        <div class="question__box">
-          <div class="title">
-            <span>What formats can I get the data in?</span>
-            <span class="icon"><i class="ri-add-fill"></i></span>
-          </div>
-          <div class="content">
-            The data extracted by my project can be obtained in various formats such as CSV and Excel files. This flexibility allows you to easily integrate the data into your own projects or workflows.
-          </div>
-        </div>
-        <div class="question__box">
-          <div class="title">
-            <span>Is your project suitable for beginners?</span>
-            <span class="icon"><i class="ri-add-fill"></i></span>
-          </div>
-          <div class="content">
-            Absolutely! My project is designed with simplicity in mind, making it accessible for beginners who want to explore the world of web scraping and data extraction.
-          </div>
-        </div>
-        <div class="question__box">
-          <div class="title">
-            <span>Can I customize your project to suit my needs?</span>
-            <span class="icon"><i class="ri-add-fill"></i></span>
-          </div>
-          <div class="content">
-            Yes, definitely! My project is open for customization, allowing you to tailor it according to your specific requirements. Whether you need additional features or modifications, feel free to adapt it to suit your needs.
-          </div>
-        </div>
-
-        <div class="question__box">
-          <div class="title">
-            <span>How secure is your project?</span>
-            <span class="icon"><i class="ri-add-fill"></i></span>
-          </div>
-          <div class="content">
-            Security is a top priority for my project. I've implemented robust encryption and data protection measures to ensure that your information remains safe and secure while using the tool.
-          </div>
-        </div>
-      </div>
-    </section>
-    
-    
-
-    <footer class="section__container footer__container">
-      <div class="footer__grid">
-        <div class="footer__col footer__logo-col">
-          <div class="footer__logo">
-            <!-- Replace "WDM" with the fox logo -->
-            <img src="/static/assets/background.png" alt="Fox Logo">
-          </div>
-          <p>
-            <span><i class="ri-mail-fill"></i></span> williams.asante515@gmail.com
-          </p>
-          <p>
+        <!-- <p>
             <span><i class="ri-phone-fill"></i></span> +212 609090882
-          </p>
-        </div>
-        <div class="footer__col footer__links-col">
-          <h4>About</h4>
-          <p><a href="#home">Home</a></p>
-          <p><a href="#data">Data</a></p>
-          <p><a href="#about">About</a></p>
-          <p><a href="#donate">Donate</a></p>
-          <p><a href="#faq">FAQ</a></p>
-        </div>
-        <div class="footer__col footer__socials-col">
-          <h4>Follow Me</h4>
-          <div class="socials">
-            <span><i class="ri-facebook-fill"></i></span>
-            <span><i class="ri-twitter-fill"></i></span>
-            <span><i class="ri-instagram-line"></i></span>
-            <!-- <span><i class="ri-youtube-fill"></i></span> -->
-          </div>
+          </p> -->
+      </div>
+      <div class="footer__col footer__links-col">
+        <h4>About</h4>
+        <p><a href="#home">Home</a></p>
+        <p><a href="#data">Data</a></p>
+        <p><a href="#about">About</a></p>
+        <p><a href="#donate">Donate</a></p>
+        <p><a href="#faq">FAQ</a></p>
+      </div>
+      <div class="footer__col footer__socials-col">
+        <h4>Follow Me</h4>
+        <div class="socials">
+          <span><i class="ri-facebook-fill"></i></span>
+          <span><i class="ri-twitter-fill"></i></span>
+          <span><i class="ri-instagram-line"></i></span>
+          <!-- <span><i class="ri-youtube-fill"></i></span> -->
         </div>
       </div>
-    </footer>
-    <div class="section__container footer__bar">
-      <p>Copyright © 2024 FoxLeads. All rights reserved.</p>
     </div>
-    
+  </footer>
+  <div class="section__container footer__bar">
+    <p>Copyright © 2024 FoxLeads. All rights reserved.</p>
+  </div>
 
-    <script>
-      const questionBox = document.getElementsByClassName("question__box");
 
-      for (let i = 0; i < questionBox.length; i++) {
-        questionBox[i].addEventListener("click", function () {
-          this.classList.toggle("active");
-        });
-      }
+  <script>
+    const questionBox = document.getElementsByClassName("question__box");
 
-      // Smooth scrolling for nav links
-      document.querySelectorAll('.nav__links a').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-          e.preventDefault();
-
-          const targetId = this.getAttribute('href').substring(1);
-          const targetElement = document.getElementById(targetId);
-
-          if (targetElement) {
-            window.scrollTo({
-              top: targetElement.offsetTop - document.querySelector('.nav__container').offsetHeight,
-              behavior: 'smooth'
-            });
-          }
-        });
+    for (let i = 0; i < questionBox.length; i++) {
+      questionBox[i].addEventListener("click", function () {
+        this.classList.toggle("active");
       });
+    }
 
-      // Smooth scrolling for Start Button
-      document.getElementById('start-btn').addEventListener('click', function(event) {
-        event.preventDefault(); // Prevent default action
+    // Smooth scrolling for nav links
+    document.querySelectorAll('.nav__links a').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
 
-        const scrapingSection = document.getElementById('scraping');
+        const targetId = this.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
 
-        if (scrapingSection) {
+        if (targetElement) {
           window.scrollTo({
-            top: scrapingSection.offsetTop - document.querySelector('.nav__container').offsetHeight,
+            top: targetElement.offsetTop - document.querySelector('.nav__container').offsetHeight,
             behavior: 'smooth'
           });
         }
       });
+    });
 
-      
-      document.getElementById('scrape-btn').addEventListener('click', function(event) {
-        event.preventDefault(); // Prevent default form submission
+    // Smooth scrolling for Start Button
+    document.getElementById('start-btn').addEventListener('click', function (event) {
+      event.preventDefault(); // Prevent default action
 
-        // Get keyword and quantity values from the form
-        const keyword = document.getElementById('keyword').value;
-        
+      const scrapingSection = document.getElementById('scraping');
 
-        // Construct JSON object with keyword and quantity
-        const data = {
-            keyword: keyword,
-            // quantity: quantity
-        };
+      if (scrapingSection) {
+        window.scrollTo({
+          top: scrapingSection.offsetTop - document.querySelector('.nav__container').offsetHeight,
+          behavior: 'smooth'
+        });
+      }
+    });
 
-        // Function to process streamed data and add listings to the table
-        const processData = (data) => {
-          const rowData = JSON.parse(data);
-          const newRow = document.createElement('tr');
 
-          rowData.forEach(value => {
-              const cell = document.createElement('td');
-              // Remove the "·Lien consulté" text before setting the cell content
-              const cleanedValue = value ? value.replace('·Lien consulté', '') : '';
-              cell.textContent = cleanedValue || ''; // Set cell content or empty string if value is null
-              newRow.appendChild(cell);
-          });
+    document.getElementById('scrape-btn').addEventListener('click', function (event) {
+      event.preventDefault(); // Prevent default form submission
 
-          document.getElementById('table-body').appendChild(newRow);
+      // Get keyword and quantity values from the form
+      const keyword = document.getElementById('keyword').value;
+
+
+      // Construct JSON object with keyword and quantity
+      const data = {
+        keyword: keyword,
+        // quantity: quantity
       };
 
-        // Function to handle streaming response
-        const handleStream = (response) => {
-            const reader = response.body.getReader();
-            const decoder = new TextDecoder('utf-8');
-            let buffer = '';
+      // Function to process streamed data and add listings to the table
+      const processData = (data) => {
+        const rowData = JSON.parse(data);
+        const newRow = document.createElement('tr');
 
-            // Process chunks of streamed data
-            reader.read().then(function processText({ done, value }) {
-                if (done) {
-                    return;
-                }
+        rowData.forEach(value => {
+          const cell = document.createElement('td');
+          // Remove the "·Lien consulté" text before setting the cell content
+          const cleanedValue = value ? value.replace('·Lien consulté', '') : '';
+          cell.textContent = cleanedValue || ''; // Set cell content or empty string if value is null
+          newRow.appendChild(cell);
+        });
 
-                buffer += decoder.decode(value, { stream: true });
+        document.getElementById('table-body').appendChild(newRow);
+      };
 
-                // Split buffer by newline characters
-                const listings = buffer.split('\n');
-                buffer = listings.pop();
+      // Function to handle streaming response
+      const handleStream = (response) => {
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder('utf-8');
+        let buffer = '';
 
-                // Process each listing
-                listings.forEach(listing => {
-                    processData(listing);
-                });
+        // Process chunks of streamed data
+        reader.read().then(function processText({ done, value }) {
+          if (done) {
+            return;
+          }
 
-                // Continue reading from the stream
-                reader.read().then(processText);
-            });
-        };
+          buffer += decoder.decode(value, { stream: true });
 
-        // Send data to backend using AJAX
-        fetch('/scrape', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
+          // Split buffer by newline characters
+          const listings = buffer.split('\n');
+          buffer = listings.pop();
+
+          // Process each listing
+          listings.forEach(listing => {
+            processData(listing);
+          });
+
+          // Continue reading from the stream
+          reader.read().then(processText);
+        });
+      };
+
+      // Send data to backend using AJAX
+      fetch('/scrape', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
         .then(response => {
-            // Handle streaming response
-            handleStream(response);
+          // Handle streaming response
+          handleStream(response);
         })
         .catch(error => {
-            console.error('Error occurred:', error);
-            // Handle network errors or other exceptions
+          console.error('Error occurred:', error);
+          // Handle network errors or other exceptions
         });
     });
-    </script>
-  </body>
+  </script>
+</body>
+
 </html>
