@@ -102,7 +102,7 @@ def extract_social_media_links(page):
     return social_media_links
 
 
-def main(search_term, quantity=9999999):
+def main(search_term, quantity=10):
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page()
